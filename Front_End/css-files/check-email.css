@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg,#f7f7f7,#4f8aa6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 300px;
+}
+.card h2 {
+    color: #1a3a5a;
+}
+.card p {
+    color: #555;
+    margin: 15px 0;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #4a86a8, #1a3a5a);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    width: 25%;
+    border: none;
+    font-weight: 600; /* يخليه أوضح */
+    letter-spacing: 0.5px; /* مسافة بين الحروف */
+    font-size: 15px;
+}
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f0f6fc; }
+    ::-webkit-scrollbar-thumb { background: #9ac9e8; border-radius: 10px; }
+/* تحسين الموبايل */
+@media (max-width: 480px) {
+.card {
+    padding: 25px;
+    border-radius: 12px;
+}
+.card h2 {
+    font-size: 20px;
+}
+.card p {
+    font-size: 14px;
+}
+.btn {
+    font-size: 14px;
+    padding: 10px;
+}
+}

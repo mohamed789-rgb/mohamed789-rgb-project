@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة المستخدم </title>
+    <link rel="stylesheet" href="../../css-files/CareMate Dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../donating-medicine.html">🩸 تبرع بالدواء</a>
+                        <a href="../order-medicine.html">📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left">
+            <a href="../sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+             <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+   <main class="dashboard-grid">
+            <aside class="sidebar-right card-style">
+                <div class="user-info-header">
+                    <img src="../../imges/user.jpg" alt="user-picture" class="mini-avatar">
+                    <span> <a href="CareMate Dashboard.html"style="list-style: none;text-decoration: none; "> الملف الشخصي </a></span>
+                </div>
+                <ul class="side-menu">
+                    <li>📋<span><a href="user_request.html"style="list-style: none;text-decoration: none;"> طلباتي</a>  </span></li>
+                    <li>❤️<span><a href="user_donation.html"style="list-style: none;text-decoration: none ;">تبرعاتي</a></span></li>
+                    <li>🔔<span><a href="user_notification.html"style="list-style: none;text-decoration: none ;">الإشعارات</a></span></li>
+                    <li>⚙️<span><a href="user_setting.html"style="list-style: none;text-decoration: none; ">الإعدادات</a></span></li>
+                </ul>
+            </aside>
+            <section class="middle-section">
+                <div class="top-orders-box card-style">
+                    <div class="orders-header-title">
+                        <span style="margin-left: 8px;">☰</span>
+                        <h2>الطلبات الحالية</h2>
+                    </div>
+                    <div class="blue-divider"></div>
+                    <div class="tab-controls">
+                        <button class="tab-btn active"><a href="user_request.html"style="list-style: none;text-decoration: none;">طلباتي</a></button>
+                        <button class="tab-btn"><a href="user_donation.html"style="list-style: none;text-decoration: none;">تبرعاتي</a></button>
+                    </div>
+                </div>
+                <div class="bottom-table-box card-style">
+                    <table class="status-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>رقم الطلب</th>
+                                <th>نوع الطلب</th>
+                                <th>حالة الطلب</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="../../imges/pills.png" class="row-icon"></td>
+                                <td>1456789</td>
+                                <td>مسكن وخافض حرارة</td>
+                                <td><span class="badge pending">قيد المراجعة 🕒</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="../../imges/pulse.png" class="row-icon"></td>
+                                <td>1456763</td>
+                                <td>أدوية القلب والضغط</td>
+                                <td><span class="badge accepted">تم قبول الطلب ✓</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="../../imges/brainstorm.png" class="row-icon"></td>
+                                <td>1456729</td>
+                                <td>أدوية الأعصاب</td>
+                                <td><span class="badge rejected">تم رفض الطلب ✘</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="left-section">
+                    <div class="user-card card-style">
+                        <div class="profile-details">
+                            <img src="../../imges/user.jpg" alt="user-picture" class="main-avatar">
+                            <div class="text-details">
+                                <h3>Hany Amir</h3>
+                                <p>010258963147 📞</p>
+                                <p>hany@gmail.com ✉</p>
+                                <p>القاهرة - مدينة نصر 📍</p>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="log-out.html"><button class="btn btn-logout">تسجيل خروج</button></a>
+                            <a href="chang-pass.html"><button class="btn btn-pass">تغير كلمة المرور</button></a>
+                            <a href="UpDate-Data.html"><button class="btn btn-edit">تعديل البيانات</button></a>
+                        </div>
+                    </div>
+                    <div class="upload-section card-style">
+                        <h3 class="upload-title">📎 رفع الوثائق</h3>
+                        <div class="upload-row">
+                            <span>صورة البطاقة</span>
+                            <label class="upload-input">
+                                <span id="label-id-card">Upload image ☁️</span>
+                                <input type="file" accept="image/*" onchange="updateLabel(this, 'label-id-card')" hidden>
+                            </label>
+                        </div>
+                        <div class="upload-row">
+                            <span>روشتة الدواء</span>
+                            <label class="upload-input">
+                                <span id="label-prescription">Upload image ☁️</span>
+                                <input type="file" accept="image/*" onchange="updateLabel(this, 'label-prescription')" hidden>
+                            </label>
+                        </div>
+                        <div class="upload-row">
+                            <span>تقرير طبي</span>
+                            <label class="upload-input">
+                                <span id="label-report">Upload image ☁️</span>
+                                <input type="file" accept="image/*, .pdf" onchange="updateLabel(this, 'label-report')" hidden>
+                            </label>
+                            </div>
+                    </div>
+            </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-section">
+            <h3>معلومات عنا</h3>
+            <p>منصة صحية متكاملة تهدف إلى تسهيل الوصول للخدمات الطبية.</p>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل معانا</h3>
+            <p>✉️ info@caremate.com</p>
+            <p>📞 +20 123-456-7890</p>
+        </div>
+    </footer>
+    <script>
+        const menuBtn = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        if (menuBtn && navList) {
+            menuBtn.onclick = function() {
+                navList.classList.toggle('active');
+                
+                // اختيارياً: تغيير الشكل لـ X
+                const icon = menuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            };
+        } else {
+            console.log("الزرار أو القائمة مش موجودين في الصفحة دي!");
+        }
+        function updateLabel(input, labelId) {
+            const label = document.getElementById(labelId);
+            if (input.files && input.files.length > 0) {
+                // عرض اسم الملف المختار
+                label.innerText = input.files[0].name;
+                label.style.color = "#28a745"; // تغيير اللون للأخضر عند النجاح
+            } else {
+                label.innerText = "Upload image ☁️";
+                label.style.color = "#888";
+            }
+        }
+    </script>
+</body>
+</html>

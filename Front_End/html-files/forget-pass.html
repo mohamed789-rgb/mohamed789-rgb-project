@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نسيت كلمة السر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css-files/forget-pass.css">
+</head>
+<body>
+    <div class="reset-container">
+        <div id="resetForm">
+            <h2>هل نسيت كلمة السر؟</h2>
+            <p>أدخل بريدك الإلكتروني وسنرسل لك رابط لإعادة تعيين كلمة السر</p>
+            <input type="email" placeholder="البريد الإلكتروني" id="emailInput" required title="please fill out this file">
+            <button id="sendBtn">إرسال الرابط</button>
+            <a href="../html-files/sign-in.html"><div class="back-login">العودة لتسجيل الدخول</div></a>
+        </div>
+        <div class="success-msg" id="successMsg">
+            تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني ✅
+            <button id="goToEmailPage">الذهاب لصفحة تأكيد الإرسال</button>
+        </div>
+    </div>
+    <script>
+        const sendBtn = document.getElementById('sendBtn');
+        const emailInput = document.getElementById('emailInput');
+        const successMsg = document.getElementById('successMsg');
+        const resetForm = document.getElementById('resetForm');
+        const goToEmailPage = document.getElementById('goToEmailPage');
+        sendBtn.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            if(email && email.includes('@')) {
+                // إخفاء الفورم
+                resetForm.style.display = 'none';
+                
+                // إظهار رسالة النجاح
+                successMsg.classList.add('show');
+            } else {
+                alert("الرجاء إدخال بريد إلكتروني صحيح");
+            }
+        });
+        // زر الانتقال لصفحة تم الإرسال
+        goToEmailPage.addEventListener('click', () => {
+            window.location.href = "check-email..html"; // اسم الصفحة الجديدة
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+:root {
+    --main-blue: #7fb3d5; /* الأزرق الخاص بالتطبيق كما في الصورة */
+    --dark-blue: #2c3e50;
+    --bg-color: #f8fafd;
+    --border-color: #d1dbe5;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+}
+body {
+    background: linear-gradient(135deg,#f7f7f7,#4f8aa6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.card {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    border-top: 5px solid var(--main-blue);
+}
+h2 {
+    text-align: center;
+    color: var(--dark-blue);
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+.input-group {
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+/* حاوية الحقل مع أيقونة العين */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.password-wrapper input {
+    width: 100%;
+    padding: 12px 15px 12px 45px; /* مساحة لجهة اليسار للأيقونة */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+.password-wrapper input:focus {
+    border-color: var(--main-blue);
+    box-shadow: 0 0 0 3px rgba(127, 179, 213, 0.1);
+}
+/* تنسيق أيقونة العين */
+.toggle-eye {
+    position: absolute;
+    left: 15px; /* في الجهة اليسرى لأن الموقع RTL */
+    color: #bdc3c7;
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+.toggle-eye:hover {
+    color: var(--main-blue);
+}
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: var(--main-blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+.btn-submit:hover {
+    background: #5d97bd;
+}
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #888;
+    text-decoration: none;
+    font-size: 13px;
+}

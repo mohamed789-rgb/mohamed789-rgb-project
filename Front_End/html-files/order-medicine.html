@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareMate - طلب الدواء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css-files/order-medicine.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+          colors: {
+            brand: '#2b7fc1',
+            'brand-dark': '#1f6aa8',
+            navy: '#1a3a5c',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../html-files/home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../html-files/hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../html-files/donating-medicine.html" >🩸 تبرع بالدواء</a>
+                        <a href="../html-files/order-medicine.html" >📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../html-files/first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left">
+            <a id="auth-btn" href="../html-files/sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+            <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="./profile/user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="./profile/user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+<!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+  <main class="max-w-5xl mx-auto py-10" style="max-width: 70rem;">
+      <!-- Page Title -->
+      <div class="text-center mb-10">
+          <h1 class="text-3xl font-extrabold text-navy mb-3">طلب الدواء</h1>
+          <p class="text-gray-500 leading-relaxed text-base max-w-2xl mx-auto">
+            تتيح هذه الخدمة للمستخدمين طلب الأدوية غير المتوفرة لديهم، حيث يمكن إدخال بيانات الدواء المطلوب وإرفاق
+            الوصفة الطبية، وسيتم مراجعة الطلب والمساعدة في توفيره من خلال الجهات المتاحة
+          </p>
+      </div>
+    <!-- Cards Grid -->
+    <div class="bg-white rounded-2xl shadow-sm border border-blue-100 p-6">
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- أدوية السكر -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center border-2 border-blue-300 text-center"
+                style="background:#ddeef8;"
+                onclick="openModal('أدوية السكر')">
+                <div class="icon-wrap" style="background:#b8d9f0;">
+                  <img src="https://em-content.zobj.net/source/google/387/syringe_1f489.png" style="width:40px;height:40px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-syringe\' style=\'color:#1776b0;font-size:30px\'></i>'">
+                  <span style="position:absolute;bottom:8px;right:8px;background:#1776b0;color:#fff;font-size:8px;padding:1px 4px;border-radius:4px;font-weight:700;">5.8</span>
+                </div>
+                <span class="text-xs text-blue-400 mb-1">أدوية السكري</span>
+                <span class="font-bold text-navy text-base">أدوية السكر</span>
+          </div>
+          </a>
+          <!-- أدوية القلب والضغط -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center border-2 border-pink-300 text-center"
+                style="background:#fce8ef;"
+                onclick="openModal('أدوية القلب والضغط')">
+                <div class="icon-wrap" style="background:#f9c0d0;">
+                  <img src="https://em-content.zobj.net/source/google/387/anatomical-heart_1fac0.png" style="width:44px;height:44px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-heart-pulse\' style=\'color:#c53030;font-size:30px\'></i>'">
+                </div>
+                <span class="text-xs text-pink-400 mb-1">أدوية القلب</span>
+                <span class="font-bold text-navy text-base">أدوية القلب والضغط</span>
+          </div>
+          </a>
+          <!-- أدوية جلدية -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center border-2 border-gray-300 text-center"
+                style="background:#f0f8ee;"
+                onclick="openModal('أدوية جلدية')">
+                <div class="icon-wrap" style="background:#d4edcc;">
+                  <img src="https://em-content.zobj.net/source/google/387/lotion-bottle_1f9f4.png" style="width:40px;height:40px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-spray-can\' style=\'color:#2f855a;font-size:30px\'></i>'">
+                </div>
+                <span class="text-xs text-green-400 mb-1">أدوية جلدية</span>
+                <span class="font-bold text-navy text-base">أدوية جلدية</span>
+          </div>
+          </a>
+          <!-- أدوية الأعصاب (highlighted) -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center text-center border-2 border-green-300"
+                style="background:#d4edcc;"
+                onclick="openModal('أدوية الأعصاب')">
+                <div class="icon-wrap" style="background:#b2dba8;">
+                  <img src="https://em-content.zobj.net/source/google/387/brain_1f9e0.png" style="width:42px;height:42px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-brain\' style=\'color:#276749;font-size:30px\'></i>'">
+                </div>
+                <span class="text-xs text-green-600 mb-1">أدوية الأعصاب</span>
+                <span class="font-bold text-navy text-base">أدوية الأعصاب</span>
+          </div>
+          </a>
+          <!-- مسكنات وخافض حرارة -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center border-2 border-pink-300 text-center"
+                style="background:#fce8ef;"
+                onclick="openModal('مسكنات وخافض حرارة')">
+                <div class="icon-wrap" style="background:#f9c0d0;">
+                  <img src="https://em-content.zobj.net/source/google/387/pill_1f48a.png" style="width:40px;height:40px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-capsules\' style=\'color:#c53030;font-size:30px\'></i>'">
+                  <span style="position:absolute;bottom:6px;right:6px;background:#e53e3e;color:#fff;font-size:7px;padding:1px 4px;border-radius:4px;font-weight:700;">حار</span>
+                </div>
+                <span class="text-xs text-pink-400 mb-1">كتان خافض حرا...</span>
+                <span class="font-bold text-navy text-base">مسكنات وخافض حرارة</span>
+          </div>
+          </a>
+          <!-- أدوية الجهاز الهضمي -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center border-2 border-orange-300 text-center"
+                style="background:#fef5ec;"
+                onclick="openModal('أدوية الجهاز الهضمي')">
+                <div class="icon-wrap" style="background:#fde3c0;">
+                  <img src="https://em-content.zobj.net/source/google/387/stomach_1fac3.png" style="width:42px;height:42px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-circle-nodes\' style=\'color:#c05621;font-size:28px\'></i>'">
+                </div>
+                <span class="text-xs text-orange-400 mb-1">جهاز الهضم</span>
+                <span class="font-bold text-navy text-base">أدوية الجهاز الهضمي</span>
+          </div>
+          </a>
+          <!-- أدوية الأطفال -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center border-2 border-gray-300 text-center"
+                style="background:#f0f8ee;"
+                onclick="openModal('أدوية الأطفال')">
+                <div class="icon-wrap" style="background:#d4edcc;">
+                  <img src="https://em-content.zobj.net/source/google/387/baby_1f476.png" style="width:42px;height:42px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-baby\' style=\'color:#2f855a;font-size:30px\'></i>'">
+                </div>
+                <span class="text-xs text-green-400 mb-1">أدوية الأطفال</span>
+                <span class="font-bold text-navy text-base">أدوية الأطفال</span>
+          </div>
+          </a>
+          <!-- أدوية الجهاز التنفسي -->
+          <a href="../html-files/medicines.html">
+          <div class="drug-card rounded-2xl p-5 flex flex-col items-center border-2 border-blue-300 text-center"
+                style="background:#ddeef8;"
+                onclick="openModal('أدوية الجهاز التنفسي')">
+                <div class="icon-wrap" style="background:#b8d9f0;">
+                  <img src="https://em-content.zobj.net/source/google/387/lungs_1fac1.png" style="width:42px;height:42px;object-fit:contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-lungs\' style=\'color:#1776b0;font-size:30px\'></i>'">
+                </div>
+                <span class="text-xs text-blue-400 mb-1">جهاز التنفس</span>
+                <span class="font-bold text-navy text-base">أدوية الجهاز التنفسي</span>
+          </div>
+          </a>
+        </div>
+      </div>
+  </main>
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+      <div class="footer-section">
+          <h3>معلومات عنا</h3>
+          <p>منصة صحية متكاملة تهدف إلى تسهيل الوصول للخدمات الطبية</p>
+      </div>
+      <div class="footer-section">
+          <h3>تواصل معانا</h3>
+          <p>✉️ info@caremate.com</p>
+          <p>📞 +20 123-456-7890</p>
+      </div>
+  </footer>
+<!-- ═══════════════════════════ MODAL ═══════════════════════════ -->
+  <div id="modal" class="fixed inset-0 z-[999] hidden items-center justify-center p-4 modal-backdrop"
+      style="background: rgba(10,30,60,0.5);">
+  <div class="modal-box bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden">
+    <!-- Header stripe -->
+    <div class="bg-brand px-6 py-4 flex items-center justify-between">
+      <h2 class="text-white font-extrabold text-lg flex items-center gap-2">
+        <i class="fa-solid fa-file-prescription text-blue-200 text-base"></i>
+        طلب دواء — <span id="modalCategory" class="text-blue-100 font-semibold text-base"></span>
+      </h2>
+      <button onclick="closeModal()" class="text-blue-200 hover:text-white transition-colors text-xl leading-none">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <!-- Body -->
+    <form onsubmit="submitForm(event)" class="px-6 py-5 space-y-4">
+      <!-- Medicine name -->
+      <div>
+        <label class="block text-sm font-bold text-navy mb-1.5">
+          <i class="fa-solid fa-pills text-brand ml-1 text-xs"></i> اسم الدواء
+        </label>
+        <input type="text" id="medName" placeholder="أدخل اسم الدواء المطلوب"
+                class="w-full border border-blue-200 rounded-xl px-4 py-2.5 text-sm bg-blue-50 placeholder-gray-400"
+                required>
+      </div>
+      <!-- Phone -->
+      <div>
+        <label class="block text-sm font-bold text-navy mb-1.5">
+          <i class="fa-solid fa-phone text-brand ml-1 text-xs"></i> رقم الهاتف
+        </label>
+        <input type="tel" id="phoneNum" placeholder="01xxxxxxxxx"
+                class="w-full border border-blue-200 rounded-xl px-4 py-2.5 text-sm bg-blue-50 placeholder-gray-400"
+                required>
+      </div>
+        <!-- Prescription upload -->
+        <div>
+          <label class="block text-sm font-bold text-navy mb-1.5">
+            <i class="fa-solid fa-file-image text-brand ml-1 text-xs"></i> إرفاق الوصفة الطبية
+          </label>
+          <label class="upload-label flex flex-col items-center justify-center gap-2 rounded-xl p-5 cursor-pointer bg-blue-50">
+            <i class="fa-solid fa-cloud-arrow-up text-brand text-2xl"></i>
+            <span class="text-xs text-gray-500 text-center">اسحب الملف هنا أو <span class="text-brand font-bold">تصفح</span></span>
+            <span class="text-xs text-gray-400">PNG, JPG, PDF — حتى 5MB</span>
+            <input type="file" class="hidden" accept="image/*,.pdf" id="fileInput" onchange="updateFileName(this)">
+          </label>
+          <p id="fileName" class="text-xs text-brand mt-1 text-center hidden"></p>
+        </div>
+        <!-- Submit -->
+        <button type="submit"
+                class="w-full bg-brand hover:bg-brand-dark text-white rounded-xl py-3 font-bold text-base flex items-center justify-center gap-2 transition-all duration-200 active:scale-95">
+          <i class="fa-solid fa-paper-plane text-blue-200"></i>
+          إرسال الطلب
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- Success Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-green-600 text-white text-sm font-bold px-6 py-3 rounded-2xl shadow-xl flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 z-[1000]">
+    <i class="fa-solid fa-circle-check text-green-200"></i>
+    تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.
+  </div>
+  <script>
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    function updateFileName(input) {
+      const el = document.getElementById('fileName');
+      if (input.files[0]) {
+        el.textContent = '✓ ' + input.files[0].name;
+        el.classList.remove('hidden');
+      }
+    }
+    function submitForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('medName').value.trim();
+      const phone = document.getElementById('phoneNum').value.trim();
+      if (!name || !phone) return;
+      closeModal();
+      const toast = document.getElementById('toast');
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+      }, 3500);
+    }
+  </script>
+  <script>
+          // 1. تشغيل قائمة الهمبرجر
+          const menuIcon = document.getElementById('mobile-menu');
+          const navList = document.getElementById('nav-list');
+          menuIcon.onclick = function() {
+              navList.classList.toggle('active');
+          };
+    </script>
+</body>
+</html>

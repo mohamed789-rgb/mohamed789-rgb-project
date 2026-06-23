@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareMate - المستشفيات</title>
+    <link rel="stylesheet" href="../css-files/hospitals.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer; padding-left: 18px;">☰</span>
+            </div>
+            <div class="logo"><img src="../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../html-files/home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../html-files/hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../html-files/donating-medicine.html" >🩸 تبرع بالدواء</a>
+                        <a href="../html-files/order-medicine.html" >📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../html-files/first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left">
+            <a id="auth-btn" href="../html-files/sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+             <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="./profile/user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="./profile/user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+    <!-- GRID -->
+    <main class="hosp-grid" id="hosp-grid"></main>
+    <!-- MAP MODAL -->
+    <div class="modal-overlay" id="map-modal">
+        <div class="map-box">
+            <div class="map-live-badge">
+                <span class="live-dot"></span><span class="live-title">تحديث مباشر</span><br>
+                <span class="live-sub">آخر تحديث: الآن</span>
+            </div>
+            <button class="map-close" onclick="closeMap()">✕</button>
+            <div class="map-svg-wrap" id="map-wrap"></div>
+            <div class="map-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:#2e7d32"></div> سرايير متاحة</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#f57c00"></div> محدود</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#c62828"></div> ممتلئ</div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-section">
+            <h3>معلومات عنا</h3>
+            <p>منصة صحية متكاملة تهدف إلى تسهيل الوصول للخدمات الطبية</p>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل معانا</h3>
+            <p>✉️ info@caremate.com</p>
+            <p>📞 +20 123-456-7890</p>
+        </div>
+    </footer>
+    <script>
+        const hospitals = [
+            {
+                name:"مستشفى جامعة المنصورة",
+                page:"../html-files/Mansoura hospital.html",       // ← اسم الصفحة
+                img:"../imges/gamaa.jpeg", distance:"320 متر",
+                sub:"شارع الجامعة، المنصورة · جامعي", phone:"0502345678",
+                beds:[
+                    {label:"سرايير عامة",  current:14, total:120, color:"orange", fill:"#f57c00"},
+                    {label:"عناية مركزة", current:3,  total:20,  color:"green",  fill:"#2e7d32"},
+                    {label:"حضانات",       current:8,  total:15,  color:"teal",   fill:"#00796b"},
+                    {label:"طوارئ",        current:5,  total:30,  color:"blue",   fill:"#1565c0"}
+                ],
+                opRooms:"2 متاح / 6", waitTime:"18 دقيقة",
+                specs:["جراحة عامة","باطنة","طوارئ","أطفال","نساء وتوليد"],
+                mapPos:{x:44,y:32}, pinColor:"#f57c00"
+            },
+            {
+                name:"المستشفى الدولي",
+                page:"../html-files/Eldawle hospital.html",    // ← اسم الصفحة
+                img:"../imges/dawly.jpeg", distance:"1.2 كم",
+                sub:"شارع الجيش، المنصورة · خاص", phone:"0503456789",
+                beds:[
+                    {label:"سرايير عامة",  current:22, total:80,  color:"green",  fill:"#2e7d32"},
+                    {label:"عناية مركزة", current:6,  total:12,  color:"orange", fill:"#f57c00"},
+                    {label:"حضانات",       current:4,  total:10,  color:"teal",   fill:"#00796b"},
+                    {label:"طوارئ",        current:9,  total:20,  color:"blue",   fill:"#1565c0"}
+                ],
+                opRooms:"3 متاح / 5", waitTime:"10 دقائق",
+                specs:["نساء وتوليد","جلدية","عيون","أسنان","تجميل"],
+                mapPos:{x:68,y:20}, pinColor:"#2e7d32"
+            },
+            {
+                name:"مستشفى السلاب",
+                page:"salab-hospital.html",            // ← اسم الصفحة
+                img:"../imges/salab.jpeg", distance:"870 متر",
+                sub:"ميت أبو غالب، المنصورة · حكومي", phone:"0504567890",
+                beds:[
+                    {label:"سرايير عامة",  current:35, total:60,  color:"orange", fill:"#f57c00"},
+                    {label:"عناية مركزة", current:9,  total:10,  color:"red",    fill:"#e53935"},
+                    {label:"حضانات",       current:2,  total:8,   color:"green",  fill:"#2e7d32"},
+                    {label:"طوارئ",        current:12, total:18,  color:"orange", fill:"#f57c00"}
+                ],
+                opRooms:"1 متاح / 4", waitTime:"25 دقيقة",
+                specs:["عظام","أعصاب","مسالك بولية","جراحة عمود فقري"],
+                mapPos:{x:26,y:56}, pinColor:"#e53935"
+            },
+            {
+                name:"مركز الأورام",
+                page:"cancer-center.html",             // ← اسم الصفحة
+                img:"../imges/marks.jpeg", distance:"2.4 كم",
+                sub:"شارع التحرير، المنصورة · تخصصي", phone:"0505678901",
+                beds:[
+                    {label:"سرايير عامة",  current:18, total:70,  color:"green",  fill:"#2e7d32"},
+                    {label:"عناية مركزة", current:5,  total:14,  color:"orange", fill:"#f57c00"},
+                    {label:"كيماوي",       current:7,  total:20,  color:"teal",   fill:"#00796b"},
+                    {label:"إشعاعي",       current:3,  total:8,   color:"blue",   fill:"#1565c0"}
+                ],
+                opRooms:"4 متاح / 5", waitTime:"35 دقيقة",
+                specs:["أورام صدر","أورام دم","علاج إشعاعي","كيماوي","جراحة أورام"],
+                mapPos:{x:76,y:64}, pinColor:"#2e7d32"
+            },
+            {
+                name:"مستشفى الأطفال",
+                page:"children-hospital.html",         // ← اسم الصفحة
+                img:"../imges/atval.jpeg", distance:"650 متر",
+                sub:"شارع الجامعة الفرعي، المنصورة · حكومي", phone:"0506789012",
+                beds:[
+                    {label:"سرايير عامة",  current:10, total:50,  color:"green",  fill:"#2e7d32"},
+                    {label:"عناية مركزة", current:4,  total:8,   color:"orange", fill:"#f57c00"},
+                    {label:"حضانات",       current:12, total:20,  color:"teal",   fill:"#00796b"},
+                    {label:"طوارئ",        current:3,  total:12,  color:"blue",   fill:"#1565c0"}
+                ],
+                opRooms:"2 متاح / 3", waitTime:"15 دقيقة",
+                specs:["طب أطفال عام","قلب أطفال","أعصاب أطفال","حضانات مبتسرين"],
+                mapPos:{x:52,y:75}, pinColor:"#2e7d32"
+            },
+            {
+                name:"مستشفى الحميات",
+                page:"fever-hospital.html",            // ← اسم الصفحة
+                img:"../imges/hmt.jpeg", distance:"1.8 كم",
+                sub:"طريق المحلة، المنصورة · حكومي", phone:"0507890123",
+                beds:[
+                    {label:"سرايير عامة",  current:28, total:45,  color:"orange", fill:"#f57c00"},
+                    {label:"عزل",          current:9,  total:12,  color:"red",    fill:"#e53935"},
+                    {label:"طوارئ",        current:6,  total:10,  color:"orange", fill:"#f57c00"},
+                    {label:"رعاية",        current:5,  total:15,  color:"green",  fill:"#2e7d32"}
+                ],
+                opRooms:"1 متاح / 2", waitTime:"20 دقيقة",
+                specs:["أمراض معدية","عزل صحي","فيروسات كبد","ملاريا وطفيليات"],
+                mapPos:{x:18,y:80}, pinColor:"#f57c00"
+            }
+        ];
+        /* ── بناء الكروت ── */
+        const grid = document.getElementById('hosp-grid');
+        hospitals.forEach((h, i) => {
+            const c = document.createElement('div');
+            c.className = 'hosp-card';
+            c.innerHTML = `
+                <img src="${h.img}" alt="${h.name}" onerror="this.src='https://placehold.co/400x200/4a86a8/white?text=${encodeURIComponent(h.name)}'">
+                <h3>${h.name}</h3>
+                <div style="display:flex;justify-content:center;gap:10px;margin-bottom:15px;">
+                    <button class="btn-small">📍 ${h.distance}</button>
+                    <button class="btn-small" onclick="openMap(${i})">🗺️ عرض الموقع</button>
+                </div>
+                <a class="detail-btn" style="margin:0 auto; display:flex; width:fit-content;" href="${h.page}">عرض التفاصيل ←</a>`;
+            grid.appendChild(c);
+        });
+        /* ── Map modal ── */
+        function openMap(selIdx){
+            const wrap = document.getElementById('map-wrap');
+            wrap.innerHTML = '';
+            const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+            svg.setAttribute('viewBox','0 0 100 100');
+            svg.setAttribute('preserveAspectRatio','none');
+            svg.style.cssText='width:100%;height:100%;position:absolute;top:0;left:0;';
+            svg.innerHTML=`
+                <rect width="100" height="100" fill="#dde4ed"/>
+                <rect x="5" y="5" width="16" height="18" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="25" y="5" width="20" height="12" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="50" y="5" width="18" height="14" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="72" y="4" width="23" height="16" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="5" y="38" width="14" height="20" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="23" y="35" width="18" height="18" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="55" y="33" width="17" height="16" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="76" y="30" width="19" height="22" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="5" y="68" width="16" height="26" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="26" y="70" width="20" height="24" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="56" y="65" width="22" height="20" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="83" y="60" width="13" height="34" rx="1" fill="#c4d0de" opacity=".8"/>
+                <rect x="0" y="25" width="100" height="5" fill="#eef0f4"/>
+                <rect x="0" y="49" width="100" height="5" fill="#eef0f4"/>
+                <rect x="0" y="64" width="100" height="3.5" fill="#eef0f4"/>
+                <rect x="21" y="0" width="4" height="100" fill="#eef0f4"/>
+                <rect x="47" y="0" width="4" height="100" fill="#eef0f4"/>
+                <rect x="74" y="0" width="3.5" height="100" fill="#eef0f4"/>
+                <text x="49" y="48.5" font-size="1.9" fill="#bbb" text-anchor="middle" font-family="Cairo,sans-serif">شارع التحرير</text>
+                <text x="49" y="63.2" font-size="1.6" fill="#ccc" text-anchor="middle" font-family="Cairo,sans-serif">شارع الجامعة</text>`;
+            wrap.appendChild(svg);
+            const me={x:49,y:52}, sel=hospitals[selIdx].mapPos;
+            const linesvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+            linesvg.setAttribute('viewBox','0 0 100 100');
+            linesvg.setAttribute('preserveAspectRatio','none');
+            linesvg.className='map-dashed-line';
+            linesvg.innerHTML=`<line x1="${me.x}" y1="${me.y}" x2="${sel.x}" y2="${sel.y}" stroke="#1a6fa8" stroke-width=".9" stroke-dasharray="2,1.5" opacity=".85"/>`;
+            wrap.appendChild(linesvg);
+            const meEl=document.createElement('div');
+            meEl.className='me-pin';
+            meEl.style.cssText=`left:${me.x}%;top:${me.y}%;`;
+            meEl.innerHTML=`<div class="me-dot"></div><div class="me-label">أنت هنا</div>`;
+            wrap.appendChild(meEl);
+            hospitals.forEach((h,idx)=>{
+                const pin=document.createElement('div');
+                pin.className='hosp-pin';
+                pin.style.cssText=`left:${h.mapPos.x}%;top:${h.mapPos.y}%;`;
+                const isSel=idx===selIdx;
+                const short=h.name.replace('مستشفى ','').replace('مركز ','');
+                pin.innerHTML=`
+                    <div class="pin-circle" style="background:${h.pinColor};${isSel?'outline:3px solid #1a3a5a;transform:scale(1.2);':''}">
+                        ${h.beds[0].current}
+                    </div>
+                    <div class="pin-label" style="${isSel?'font-weight:900;color:#1a3a5a;border:1px solid #1a3a5a;':''}">${short}</div>`;
+                pin.onclick=()=>{ closeMap(); window.location.href=h.page; };
+                wrap.appendChild(pin);
+            });
+            document.getElementById('map-modal').classList.add('active');
+        }
+        function closeMap(){ document.getElementById('map-modal').classList.remove('active'); }
+        document.getElementById('map-modal').addEventListener('click',e=>{ if(e.target===document.getElementById('map-modal')) closeMap(); });
+        /* hamburger */
+        document.getElementById('mobile-menu').onclick=()=>document.getElementById('nav-list').classList.toggle('active');
+    </script>
+</body>
+</html>

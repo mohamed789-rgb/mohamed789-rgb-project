@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareMate - تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css-files/sign-in.css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../imges/f2.jpeg" alt="Logo"></div>
+            
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../html-files/home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../html-files/hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../html-files/donating-medicine.html">🩸 تبرع بالدواء</a>
+                        <a href="../html-files/order-medicine.html">📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../html-files/first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+                </div>
+        <div class="nav-left">
+             <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="./profile/user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="./profile/user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
+            <form>
+                <h2>إنشاء حساب</h2>
+                <div class="social-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-google"></i>
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+                <span style=" padding: 5px 0px 5px 0px;"> استخدم بريدك الإلكتروني للتسجيل</span>
+                    <input type="text" placeholder="الاسم">
+                    <input type="email" placeholder="البريد الإلكتروني" required>
+                    <div class="password-wrapper" style="position: relative; width: 100%;">
+                        <input type="password" id="signup-pass" placeholder="كلمة السر" required style="width: 100%;">
+                        <i class="fas fa-eye" onclick="togglePasswordVisibility('signup-pass', this)" 
+                        style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #777;"></i>
+                    </div>
+                <button type="button" class="mobile-switch" onclick="toggleForm()">لديك حساب بالفعل؟ تسجيل الدخول</button>
+                <button class="signup-btn">التسجيل</button>
+            </form>
+        </div>
+        <div class="form-container sign-up-container">
+            <form>
+                <h2>تسجيل الدخول</h2>
+                    <div class="social-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-google"></i>
+                    <i class="fab fa-linkedin-in"></i>
+                    
+                    
+                </div>
+                <span style=" padding: 5px 0px 5px 0px;">سجل باستخدام حسابك</span>
+                    <input type="email" placeholder="البريد الإلكتروني" required>
+                    <div class="password-field-container" style="position: relative; width: 100%;">
+                        <input type="password" id="login-pass" placeholder="كلمة السر" style="width: 100%; padding-left: 40px;">
+                        <i class="fas fa-eye" onclick="togglePasswordVisibility('login-pass', this)" 
+                        style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #777;"></i>
+                    </div>
+                    <a href="../html-files/forget-pass.html" class="forget-pass">نسيت كلمة السر؟</a>
+                <button type="button" class="mobile-switch" onclick="toggleForm()">ليس لديك حساب؟ إنشاء حساب</button>
+                    <button class="signup-btn">التسجيل</button>
+                    
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1 style="padding-bottom: 25px;">مرحبا بعودتك</h1>
+                    <p style="padding-bottom: 10px;">أبق علي اتصال بنا , يرجي تسجيل الدخول باستخدام معلوماتك الشخصية</p>
+                    <button class="ghost" id="signUp">تسجيل الدخول </button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>مرحبا يا صديقي</h1>
+                    <p style=" padding: 5px 0px 5px 0px;">أدخل بياناتك الشخصية وأبدأ رحلتك معنا</p>
+                    <button class="ghost" id="signIn">التسجيل</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+            <div class="footer-section">
+                <h3>معلومات عنا</h3>
+                <p>منصة صحية متكاملة تهدف إلى تسهيل الوصول للخدمات الطبية.</p>
+            </div>
+            <div class="footer-section">
+                <h3>تواصل معانا</h3>
+                <p>✉️ info@caremate.com</p>
+                <p>📞 +20 123-456-7890</p>
+            </div>
+    </footer>
+    <script>
+        const menuBtn = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        if (menuBtn && navList) {
+            menuBtn.onclick = function() {
+                navList.classList.toggle('active');
+                
+                // اختيارياً: تغيير الشكل لـ X
+                const icon = menuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            };
+        } else {
+            console.log("الزرار أو القائمة مش موجودين في الصفحة دي!");
+        }
+            const toggle = document.getElementById("themeToggle");
+            toggle.onclick = function(){
+            document.body.classList.toggle("dark-theme");
+            }
+    </script>
+    <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+    </script>
+    <script>
+    function togglePasswordVisibility(inputId, icon) {
+    const passwordInput = document.getElementById(inputId);
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        // تغيير الأيقونة للعين المشطوبة
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        // إعادة الأيقونة لشكلها الأصلي
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+function toggleForm() {
+    const container = document.getElementById('container');
+    // يقوم بتبديل الكلاس active: إذا كان موجوداً يحذفه، وإذا لم يكن موجوداً يضيفه
+    container.classList.toggle("active");
+}
+</script>
+</body>
+</html>

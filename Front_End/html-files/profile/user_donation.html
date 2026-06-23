@@ -1,0 +1,86 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة المستخدم </title>
+    <link rel="stylesheet" href="../../css-files/CareMate Dashboard(1).css">
+      <link rel="stylesheet" href="../../css-files/style.css">
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons (via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../donating-medicine.html">🩸 تبرع بالدواء</a>
+                        <a href="../order-medicine.html">📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left" >
+            <a href="../sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+             <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+    <main class="dashboard-grid">
+            <aside class="sidebar-right card-style">
+                <div class="user-info-header">
+                    <img src="../../imges/user.jpg" alt="user-picture" class="mini-avatar">
+                    <span> <a href="CareMate Dashboard.html"style="list-style: none;text-decoration: none; "> الملف الشخصي </a></span>
+                </div>
+                <ul class="side-menu">
+                    <li>📋<span><a href="user_request.html"style="list-style: none;text-decoration: none; ">طلباتي</a>  </span></li>
+                    <li>❤️<span><a href="user_donation.html"style="list-style: none;text-decoration: none; ">تبرعاتي</a></span></li>
+                    <li>🔔<span><a href="user_notification.html"style="list-style: none;text-decoration: none; ">الإشعارات</a></span></li>
+                    <li>⚙️<span><a href="user_setting.html"style="list-style: none;text-decoration: none; ">الإعدادات</a></span></li>
+                </ul>
+            </aside>
+            
+            <div id="view-donations" style="height: 850px;">
+        <div class="w-full flex-col items-center flex gap-4" style="height:800px ;">
+            <div class="page-title" data-i18n="nav.myDonations">تبرعاتي</div>
+            <div class="card" style="padding: 30px; text-align: center;">
+                <i data-lucide="heart-handshake"
+                    style="width: 60px; height: 60px; color: #d32f2f; margin-bottom: 20px;"></i>
+                <h2 style="margin-bottom: 15px;" data-i18n="donations.title">لا يوجد تبرعات حالياً</h2>
+                <p style="color: var(--text-muted);" data-i18n="donations.active">ابدأ بالتبرع الآن لمساعدة الآخرين.</p>
+                <button class="primary-btn" style="margin-top: 20px;"  
+                    data-i18n="nav.medicine"> <a href="../donating-medicine.html" style="list-style: none;text-decoration: none;color: rgb(255, 255, 255);">تبرع الآن </a></button>
+            </div>
+        </div>
+    </main>
+    
+    <script src="../../js/script.js">
+      
+    </script>
+</body>
+</html>

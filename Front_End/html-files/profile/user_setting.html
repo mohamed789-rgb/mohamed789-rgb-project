@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة المستخدم </title>
+    <link rel="stylesheet" href="../../css-files/CareMate Dashboard.css">
+      <link rel="stylesheet" href="../../css-files/style.css">
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons (via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../donating-medicine.html">🩸 تبرع بالدواء</a>
+                        <a href="../order-medicine.html">📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../html-files/first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left">
+            <a href="../html-files/sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+            <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+    <main class="dashboard-grid">
+            <aside class="sidebar-right card-style">
+                <div class="user-info-header">
+                    <img src="../../imges/user.jpg" alt="user-picture" class="mini-avatar">
+                    <span> <a href="CareMate Dashboard.html"style="list-style: none;text-decoration: none; "> الملف الشخصي </a></span>
+                </div>
+                <ul class="side-menu">
+                    <li>📋<span><a href="user_request.html"style="list-style: none;text-decoration: none; ">طلباتي</a>  </span></li>
+                    <li>❤️<span><a href="user_donation.html"style="list-style: none;text-decoration: none; ">تبرعاتي</a></span></li>
+                    <li>🔔<span><a href="user_notification.html"style="list-style: none;text-decoration: none; "> الإشعارات</a></span></li>
+                    <li>⚙️<span><a href="user_setting.html"style="list-style: none;text-decoration: none ;"> الإعدادات</a></span></li>
+                </ul>
+            </aside>
+            <div class="w-full flex-col items-center flex">
+            <div class="card">
+                <div class="flex flex-col items-center justify-center p-4"
+                    style="border-bottom: 1px solid var(--border-color); margin-bottom: 20px;">
+                    <div
+                        style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px; width: 100%; justify-content: center;">
+                        <img src="../../imges/user.jpg" alt="user-picture" style="width: 180px; height: 160px; border-radius: 50%;border: 2px solid #fff;object-fit: cover;">
+                        <label class="primary-btn"
+                            style="display: flex; align-items: center; gap: 10px; padding: 5px 15px; border-radius: 8px; cursor: pointer;">
+                            <i data-lucide="camera"></i>
+                            <span data-i18n="settings.changePhoto">تغيير الصورة</span>
+                            <input type="file" accept="image/*" style="display: none;"
+                                onchange="handleFileChange(event)">
+                        </label>
+                    </div>
+                </div>
+                <div class="input-row" style="gap: 20px;">
+                    <div class="input-label" style="width: 150px;" data-i18n="settings.name">الأسم:</div>
+                    <div style="flex: 1; display: flex; align-items: center; position: relative;">
+                        <input type="text" class="input-field" style="width: 100%;" value="Hany Amir" readonly>
+                        <span class="edit-badge" onclick="alert(t('notifications.clicked') + ' ' + t('settings.name'))"
+                            data-i18n="common.edit">تعديل</span>
+                    </div>
+                </div>
+                <div class="input-row" style="gap: 20px;">
+                    <div class="input-label" style="width: 150px;" data-i18n="settings.password">كلمة المرور:</div>
+                    <div style="flex: 1; display: flex; align-items: center; position: relative;">
+                        <input type="password" class="input-field" style="width: 100%;" value="password" readonly>
+                        <span class="edit-badge"
+                            onclick="alert(t('notifications.clicked') + ' ' + t('settings.password'))"
+                            data-i18n="common.edit">تعديل</span>
+                    </div>
+                </div>
+                <div class="input-row" style="gap: 20px;">
+                    <div class="input-label" style="width: 150px;" data-i18n="settings.email">البريد الإلكتروني:</div>
+                    <div style="flex: 1; display: flex; align-items: center; position: relative;">
+                        <input type="email" class="input-field" style="width: 100%;" value="hany@gmail.com" readonly>
+                        <span class="edit-badge" onclick="alert(t('notifications.clicked') + ' ' + t('settings.email'))"
+                            data-i18n="common.edit">تعديل</span>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center gap-4" style="margin-top: 30px;">
+                    <button class="primary-btn" style="width: 60%; padding: 12px;"
+                         data-i18n="settings.resetPassword"> <a href="reset-password.html" style="text-decoration: none; list-style: none; color: #fff;"> إعادة تعيين كلمة</a>
+                        المرور</button>
+                    <button class="cancel-btn" style="width: 40%; padding: 12px;" onclick="alert(t('common.logout'))"
+                        data-i18n="common.logout">تسجيل خروج</button>
+                </div>
+            </div>
+        </div>
+    <script src="../../js/script.js">
+      
+    </script>
+</body>
+</html>

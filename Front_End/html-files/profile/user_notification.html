@@ -1,0 +1,123 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة المستخدم </title>
+    <link rel="stylesheet" href="../../css-files/CareMate Dashboard.css">
+      <link rel="stylesheet" href="../../css-files/style.css">
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons (via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../donating-medicine.html">🩸 تبرع بالدواء</a>
+                        <a href="../order-medicine.html">📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left" >
+            <a href="../sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+             <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+    <main class="dashboard-grid">
+            <aside class="sidebar-right card-style">
+                <div class="user-info-header">
+                    <img src="../../imges/user.jpg" alt="user-picture" class="mini-avatar">
+                    <span> <a href="CareMate Dashboard.html"style="list-style: none;text-decoration: none; "> الملف الشخصي </a></span>
+                </div>
+                <ul class="side-menu">
+                    <li>📋<span><a href="user_request.html"style="list-style: none;text-decoration: none;">طلباتي</a>  </span></li>
+                    <li>❤️<span><a href="user_donation.html"style="list-style: none;text-decoration: none; ">تبرعاتي</a></span></li>
+                    <li>🔔<span><a href="user_notification.html"style="list-style: none;text-decoration: none; ">الإشعارات</a></span></li>
+                    <li>⚙️<span><a href="user_setting.html"style="list-style: none;text-decoration: none; ">الإعدادات</a></span></li>
+                </ul>
+            </aside>
+            <div>
+             <div id="view-notifications" class="w-full flex-col items-center flex gap-4" style="width: 100%;">
+            <div class="page-title" data-i18n="notifications.title">الإشعارات</div>
+            <div id="notifications-list" class="w-full flex-col items-center flex gap-4"></div>
+        </div>
+        <div class="list-item" onclick="alert('تم النقر على الإشعار: أدوية القلب والضغط')" style="cursor: pointer; border-inline-start: 6px solid #28a745; padding: 15px 20px; display: block; gap: 15px; align-items: flex-start;">
+            <div style="display: flex; flex-direction: column; alignItems: center; gap: 5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="heart-pulse" aria-hidden="true" style="width: 30px; height: 30px;" class="lucide lucide-heart-pulse"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width: 20px; height: 20px; color: #28a745" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+            </div>
+            <div style="text-align: start; flex: 1;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 5px; color: var(--text-main);">أدوية القلب والضغط</h3>
+                <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 8px;">تم استلام التبرع الخاص بك لأدوية القلب والضغط بنجاح من مستشفى الجامعة بالمنصورة</p>
+                <span style="color: #888; font-size: 0.9rem;">منذ 3 ساعات</span>
+            </div>
+        </div>
+        <div class="list-item" onclick="alert('تم النقر على الإشعار: أدوية السكر')" style="cursor: pointer; border-inline-start: 6px solid #e0a800; padding: 15px 20px; display: flex; gap: 15px; align-items: flex-start;">
+            <div style="display: flex; flex-direction: column; alignItems: center; gap: 5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pill" aria-hidden="true" style="width: 30px; height: 30px;" class="lucide lucide-pill"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="hourglass" aria-hidden="true" style="width: 20px; height: 20px; color: #e0a800" class="lucide lucide-hourglass"><path d="M5 22h14"></path><path d="M5 2h14"></path><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"></path><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path></svg>
+            </div>
+            <div style="text-align: start; flex: 1;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 5px; color: var(--text-main);">أدوية السكر</h3>
+                <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 8px;">طلبك لأدوية السكر من مستشفى الدولي التخصصي لا يزال قيد المراجعة</p>
+                <span style="color: #888; font-size: 0.9rem;">منذ يوم</span>
+            </div>
+        </div>
+        <div class="list-item" onclick="alert('تم النقر على الإشعار: تم التبرع')" style="cursor: pointer; border-inline-start: 6px solid #387fa7; padding: 15px 20px; display: flex; gap: 15px; align-items: flex-start;">
+            <div style="display: flex; flex-direction: column; alignItems: center; gap: 5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="heart-handshake" aria-hidden="true" style="width: 30px; height: 30px;" class="lucide lucide-heart-handshake"><path d="M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762"></path></svg>
+                
+            </div>
+            <div style="text-align: start; flex: 1;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 5px; color: var(--text-main);">تم التبرع</h3>
+                <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 8px;">تم توجيه تبرعاتك لأدوية الضغط لمستشفى السلاب</p>
+                <span style="color: #888; font-size: 0.9rem;">منذ 3 أيام</span>
+            </div>
+        </div>
+        <div class="list-item" onclick="alert('تم النقر على الإشعار: موعد جديد')" style="cursor: pointer; border-inline-start: 6px solid #5ba4c2; padding: 15px 20px; display: flex; gap: 15px; align-items: flex-start;">
+            <div style="display: flex; flex-direction: column; alignItems: center; gap: 5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar-clock" aria-hidden="true" style="width: 30px; height: 30px;" class="lucide lucide-calendar-clock"><path d="M16 14v2.2l1.6 1"></path><path d="M16 2v4"></path><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path><path d="M3 10h5"></path><path d="M8 2v4"></path><circle cx="16" cy="16" r="6"></circle></svg>
+                
+            </div>
+            <div style="text-align: start; flex: 1;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 5px; color: var(--text-main);">موعد جديد</h3>
+                <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 8px;">تم تحديد موعد لاستلام تبرعك لأدوية الأعصاب يوم 10 أبريل 2026</p>
+                <span style="color: #888; font-size: 0.9rem;">منذ أسبوع</span>
+            </div>
+        </div>
+    </div>
+    </main>
+    </div>
+    <script src="../../js/script.js">
+      
+    </script>
+</body>
+</html>

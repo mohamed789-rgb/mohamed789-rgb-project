@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareMate - مستشفي جامعة المنصورة</title>
+    <link rel="stylesheet" href="../css-files/Mansoura hospital.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../html-files/home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../html-files/hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../html-files/donating-medicine.html" >🩸 تبرع بالدواء</a>
+                        <a href="../html-files/order-medicine.html" >📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../html-files/first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left">
+            <a href="../html-files/sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+            <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="./profile/user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="./profile/user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+        <!-- ══════════════ PAGE ══════════════ -->
+    <main class="page">
+        <div class="card">
+            <a class="btn-back" href="../html-files/hospitals.html">← رجوع</a>
+            <!-- Header -->
+            <div class="hosp-header">
+                <h1 class="hosp-name">مستشفى جامعة المنصورة </h1>
+                <div class="stars-row">
+                    <span class="rating-num">4.3</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star dim">⭐</span>
+                </div>
+                <div class="meta">
+                    <span class="meta-item">📍 شارع الجمهورية - المنصورة &nbsp;|&nbsp; 📞 0502255225</span>
+                    <span class="meta-item">🕐 24 ساعة</span>
+                </div>
+            </div>
+            <!-- 3-column grid -->
+            <div class="content-grid">
+            <!-- LEFT: image + departments -->
+            <div class="col-left">
+                <div class="hosp-img">
+                <div class="ph-img">
+                    <span class="ico"><img src="../imges/gamaa.jpeg" style="width: 100%; height: 100%;"></span>
+                </div>
+                </div>
+                <div class="depts-box">
+                <p class="box-title">الأقسام الطبية</p>
+                <div class="dept-grid">
+                    <button class="dept-btn"><span class="em">❤️</span> الباطنة</button>
+                    <button class="dept-btn"><span class="em">🦴</span> العظام</button>
+                    <button class="dept-btn"><span class="em">👶</span> الأطفال</button>
+                    <button class="dept-btn span2"><span class="em">🤱</span> النسا والتوليد</button>
+                    <button class="dept-btn"><span class="em">🚑</span> الطوارئ</button>
+                </div>
+                </div>
+            </div>
+            <!-- MIDDLE: services -->
+            <div class="services-box">
+                <p class="box-title">الخدمات المتاحة</p>
+                <div class="svc-item"><span>الأشعة</span><span class="svc-icon">🩻</span></div>
+                <div class="svc-item"><span>الصيدليات</span><span class="svc-icon">💊</span></div>
+                <div class="svc-item"><span>التحاليل الطبية</span><span class="svc-icon">🧪</span></div>
+                <div class="svc-item"><span>العناية المركزة</span><span class="svc-icon">🏥</span></div>
+                <div class="svc-item"><span>غرف العمليات</span><span class="svc-icon">🔬</span></div>
+            </div>
+            <!-- RIGHT: map -->
+            <div class="map-box">
+                <p class="box-title">الموقع على الخريطة</p>
+                <div class="map-img">
+                <div class="ph-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3418.378788389471!2d31.36686822559737!3d31.043552970546774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f79dd0441cbe8f%3A0x3a28297de7005a5!2z2YXYs9iq2LTZgdmK2KfYqiDYrNin2YXYudipINin2YTZhdmG2LXZiNix2Kk!5e0!3m2!1sar!2seg!4v1777151009434!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- Bottom row -->
+            <div class="bottom-row">
+                <div class="info-chip">
+                    <span class="chip-ico">🕐</span>
+                    <span>مدة الإنتظار المتوقعة 15-25 دقيقة</span>
+                </div>
+                <div class="info-chip">
+                    <span class="chip-ico">👥</span>
+                    <span>متاح أسرة للاستقبال</span>
+                </div>
+                <a href="https://maps.app.goo.gl/nvrBFveLPH6LJUmw5">
+                <button class="btn-location">
+                    <span class="chip-ico">📍</span>
+                    عرض الموقع
+                </button>
+                </a>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-section">
+            <h3>معلومات عنا</h3>
+            <p>منصة صحية متكاملة تهدف إلى تسهيل الوصول للخدمات الطبية</p>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل معانا</h3>
+            <p>✉️ info@caremate.com</p>
+            <p>📞 +20 123-456-7890</p>
+        </div>
+    </footer>
+    <script>
+        // 1. تشغيل قائمة الهمبرجر
+        const menuIcon = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        menuIcon.onclick = function() {
+            navList.classList.toggle('active');
+            function toggleMenu() {
+            document.querySelector(".nav-links").classList.toggle("active");}
+        };
+    </script>
+    <script>
+        const ham = document.getElementById('ham');
+        const mob = document.getElementById('mobMenu');
+        ham.addEventListener('click', () => {
+            ham.classList.toggle('open');
+            mob.classList.toggle('open');
+        });
+        mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            ham.classList.remove('open');
+            mob.classList.remove('open');
+        }));
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 840) {
+            ham.classList.remove('open');
+            mob.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>

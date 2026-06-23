@@ -1,0 +1,537 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+:root {
+    --primary-blue: #4a86a8;
+    --dark-blue: #1a3a5a;
+    --white: #ffffff;      /* لون الهيدر والفوتر الافتراضي */
+    --bg-light: #ffffff;   /* لون الخلفية الأساسي */
+    --hero-bg: #bbd4e0;    /* لون منطقة الـ Hero الافتراضي */
+    --text-main: #333333;
+    --moon-color: #262727;
+    --sun-color: #ffca28;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+body { background-color: var(--bg-light);
+        color: var(--text-main);
+        transition: 0.3s;
+        overflow-x: hidden;
+        background: linear-gradient(135deg,#f7f7f7,#4f8aa6);
+        } 
+/* --- الهيدر (Navbar) --- */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 4%; background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    height: 60px;
+}
+.nav-right { display: flex; align-items: center; gap: 20px; position: relative; right: 235px; }
+.logo img { width: 100px; transition: 0.3s; position: absolute; right: -190px; top: -8px; }
+.nav-links { display: flex; list-style: none; gap: 20px; }
+.nav-links a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
+.nav-links a:hover { color: var(--primary-blue); }
+/* القائمة المنسدلة */
+.dropdown { position: relative; cursor: pointer; font-weight: 700; font-size: 0.9rem; }
+.dropdown-content {
+    display: none; position: absolute; background: var(--white); min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 8px; top: 100%; right: 0; z-index: 100;
+}
+.dropdown-content a { padding: 12px; font-size: 0.85rem; border-bottom: 1px solid #eee; display: block; text-decoration: none; color: var(--text-main); }
+.dropdown:hover .dropdown-content { display: block; }
+/* --- الجزء الأيسر --- */
+.nav-left { display: flex; align-items: center; gap: 15px; }
+.login-btn {
+    background: var(--primary-blue); color: white; border: 2px solid var(--primary-blue);
+    padding: 8px 18px; border-radius: 12px; cursor: pointer; font-weight: bold;
+    display: flex; align-items: center; gap: 8px; transition: 0.3s;
+}
+.user-icon-img { width: 18px; height: 18px; filter: brightness(0) invert(1); }
+.login-btn:hover { background: white; color: var(--primary-blue); }
+.login-btn:hover .user-icon-img {
+    filter: brightness(0) saturate(100%) invert(56%) sepia(10%) hue-rotate(160deg);
+}
+.settings-icons { display: flex; gap: 12px; align-items: center; }
+.icon-settings { cursor: pointer; font-size: 1.2rem; color: var(--text-main); }
+/* تنسيق الجرس الافتراضي */
+.notification-container {
+    position: relative; background: white; border: 1.5px solid black;
+    border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    transition: 0.3s;
+}
+.red-dot {
+    position: absolute; top: 1px; right: 1px; width: 7px; height: 7px;
+    background: red; border-radius: 50%; border: 1px solid white;
+}
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f0f6fc; }
+    ::-webkit-scrollbar-thumb { background: #9ac9e8; border-radius: 10px; }
+@keyframes floating { from { transform: translateY(0); } to { transform: translateY(-20px); } }
+.start-btn { 
+    background: var(--primary-blue); color: white; border: 2px solid var(--primary-blue);
+    padding: 14px 40px; border-radius: 35px; cursor: pointer; font-weight: 800; transition: 0.3s;
+}
+.start-btn:hover { background: white; color: var(--primary-blue); }
+:root {
+    --main-bg: #e9f1f7;
+    --sidebar-blue: #cce0f0;
+    --btn-blue: #3d85c6;
+    --btn-red: #e06666;
+    --text-dark: #333;
+    --border-color: #b4c7d6;
+}
+body {
+    background-color: var(--main-bg);
+    font-family: 'Cairo', sans-serif;
+    color: var(--text-dark);
+}
+.dashboard-grid {
+    display: grid;
+    /* جعل الارتفاع تلقائي لضمان محاذاة القمم */
+    grid-template-columns: 280px 1fr 400px;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: stretch; /* هذا يضمن أن كل الحاويات تبدأ من نفس المستوى العلوي */
+    padding: 20px;
+}
+/* الكروت الموحدة */
+.card-style {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden; /* لمنع خروج العناصر عن الحواف */
+}
+.row-icon { width: 30px; }
+/* --- القسم الأيمن (القائمة) --- */
+.sidebar-right {
+    display: flex;
+    flex-direction: column;
+}
+.user-info-header {
+    background: var(--sidebar-blue);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    justify-content: flex-start;
+}
+.mini-avatar { border-radius: 50%; width: 35px; }
+.side-menu { list-style: none; padding: 0; margin: 0; }
+.side-menu li {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.side-menu a{
+    text-decoration-line: none;
+    color: var(--text-main);
+}
+.side-menu li:hover { background: #f9f9f9; }
+
+/* --- القسم الأوسط --- */
+.middle-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-between;
+}
+/* تعديل منطقة العنوان والخط */
+.top-orders-box {
+    padding: 0; /* التخلص من الحشو لضبط الخط */
+}
+.orders-header-title {
+    padding: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.orders-header-title h2 { margin: 0; font-size: 1.2rem; }
+/* الخط الأزرق المطلوب */
+.blue-divider {
+    height: 2px;
+    background-color: var(--btn-blue);
+    width: 100%;
+}
+.tab-controls {
+    display: flex;
+    justify-content: flex-start; /* وضع الأزرار لليسار حسب الاتجاه العربي */
+    padding: 10px 15px;
+}
+.tab-btn {
+    padding: 8px 30px;
+    border: 1px solid var(--border-color);
+    background: white;
+    cursor: pointer;
+    font-family: 'Cairo';
+}
+.tab-btn.active { 
+    background: var(--btn-blue); 
+    color: white; 
+    border-color: var(--btn-blue); 
+}
+/* الجدول */
+.status-table { width: 100%; border-collapse: collapse; text-align: center; }
+.status-table th { padding: 15px; color: #777; font-weight: 600; border-bottom: 1px solid #eee; }
+.status-table td { padding: 15px; border-bottom: 1px solid #f9f9f9; }
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.pending { background: #ffe599; color: #bf9000; }
+.accepted { background: #cfe2f3; color: #3d85c6; }
+.rejected { background: #f4cccc; color: #cc0000; }
+/* --- القسم الأيسر --- */
+.left-section { display: flex; flex-direction: column; gap: 20px; }
+.user-card { padding: 15px; position: relative; }
+.profile-details { display: flex; flex-direction: row-reverse; gap: 15px; margin-bottom: 20px; }
+.main-avatar { border-radius: 8px; width: 70px; height: 70px; background: #eee; }
+.text-details { text-align: left; flex-grow: 1; }
+.text-details h3 { margin: 0 0 5px 0; font-size: 16px; }
+.text-details p { margin: 2px 0; font-size: 12px; color: #666; }
+.card-actions { display: flex; gap: 5px; margin-top: 10px;justify-content: center; }
+.btn {
+    flex: 1;
+    padding: 8px 2px;
+    font-size: 11px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-family: 'Cairo';
+}
+.btn-logout { background: var(--btn-red); color: white; border: none; width: 100px; }
+.btn-edit { background: var(--btn-blue); color: white; border: none; width: 100px; }
+.btn-pass { background: #f0f0f0; width: 100px; }
+/* رفع الوثائق */
+.upload-section { padding: 15px; }
+.upload-title { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    margin-bottom: 15px; 
+    padding-bottom: 10px; 
+    border-bottom: 1px solid #eee;
+}
+.upload-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    line-height: 8px;
+}
+.upload-input {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    border-radius: 4px;
+    width: 140px;
+    display: flex;
+    justify-content:center;
+    color: #888;
+    font-size: 11px;
+    background: #fafafa;
+}
+.upload-input {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    border-radius: 4px;
+    width: 140px;
+    display: flex;
+    justify-content: center;
+    color: #888;
+    font-size: 11px;
+    background: #fafafa;
+    cursor: pointer; /* تجعل السهم يتحول ليد عند التمرير */
+    transition: background 0.3s;
+    overflow: hidden; /* لمنع خروج النص الطويل */
+    white-space: nowrap;
+}
+.upload-input:hover {
+    background: #f0f0f0;
+    border-color: #007bff;
+}
+/* --- الفوتر (Footer) --- */
+.footer { 
+    background: var(--dark-blue); color: white; padding: 40px 8%; 
+    display: flex; justify-content: space-between; 
+    transition: 0.3s;
+}
+.footer-section h3 { border-bottom: 3px solid var(--primary-blue); display: inline-block; margin-bottom: 12px; }
+/* في الشاشات الكبيرة: نخفي الزرار ونظهر القائمة */
+.menu-toggle { display: none; }
+@media (max-width: 768px) {
+/* إظهار زرار الـ 3 شرطات */
+.menu-toggle { 
+    display: block !important; 
+    font-size: 24px; 
+    cursor: pointer;
+}
+/* إخفاء القائمة الأصلية وتحويلها لمنسدلة */
+.nav-links {
+    display: none; /* مخفية */
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+/* الكلاس اللي الـ JS بيضيفه لما تضغطي */
+.nav-links.active {
+    display: flex !important;
+}
+}
+/* ================== Responsive ================== */
+/* موبايل (أقل من 768px) */
+@media (max-width: 768px) {
+
+    /* النافبار */
+    /* ================== Responsive Header Fix ================== */
+
+@media (max-width: 768px) {
+/* الحاوية الرئيسية للهيدر */
+.navbar {
+    flex-direction: row; /* الحفاظ على العناصر بجانب بعضها */
+    justify-content: space-between;
+    padding: 10px 15px;
+    position: relative;
+}
+/* إخفاء القائمة النصية فقط */
+.nav-links {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* تظهر أسفل الهيدر مباشرة */
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    padding: 15px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    gap: 15px;
+    text-align: center;
+}
+.nav-links.active {
+        display: flex !important;
+}
+/* تنظيم الجزء الأيمن (اللوجو وزر القائمة) */
+.nav-right {
+    gap: 10px;
+}
+.logo img {
+    width: 80px; /* تصغير اللوجو قليلاً للموبايل */
+}
+/* تنظيم الجزء الأيسر (الأيقونات وزر الدخول) */
+.nav-left {
+    gap: 8px;
+}
+/* زر تسجيل الدخول في الموبايل */
+.login-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+}
+/* تصغير حجم أيقونات الإعدادات والوضع الليلي */
+.settings-icons {
+    gap: 8px;
+}
+#theme-btn, .icon-settings {
+    font-size: 1.1rem;
+}
+.notification-container {
+    width: 28px;
+    height: 28px;
+    }
+/* إظهار زرار الـ 3 شرطات بجانب اللوجو */
+.menu-toggle {
+        display: block !important;
+        order: -1; /* يجعله يظهر قبل اللوجو أو بعده حسب رغبتك */
+        font-size: 20px;
+        color: var(--text-main);
+}
+}
+/* الفورم */
+.form {
+        grid-template-columns: 1fr; /* عمود واحد */
+        gap: 20px;
+    }
+    /* الكونتينر */
+    .container {
+        width: 95%;
+        padding: 15px;
+        border-radius: 20px;
+    }
+    /* العناوين */
+    .title {
+        font-size: 22px;
+    }
+    .subtitle {
+        font-size: 14px;
+    }
+    /* الإدخالات */
+    .input {
+        padding: 10px 15px;
+    }
+    /* زرار الطلب */
+    .btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+    /* الفوتر */
+    .footer {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+}
+/*  تابلت (من 768 إلى 1024) */
+@media (max-width: 1024px) {
+    .form {
+        grid-template-columns: 1fr; /* برضه عمود واحد */
+    }
+    .container {
+        width: 95%;
+    }
+    .btn {
+        width: 80%;
+    }
+}
+/* --- Media Queries Responsive --- */
+/* للشاشات المتوسطة (التابلت - أقل من 1024px) */
+@media (max-width: 1024px) {
+.dashboard-grid {
+    /* تحويل الشبكة إلى عمودين بدلاً من ثلاثة، أو تغيير المقاسات */
+    grid-template-columns: 250px 1fr;
+}
+.left-section {
+    /* نقل القسم الأيسر ليكون تحت القسم الأوسط أو في سطر جديد */
+    grid-column: span 2; 
+    flex-direction: row; /* جعل كروت المعلومات بجانب بعضها */
+    flex-wrap: wrap;
+}
+.user-card, .upload-section {
+    flex: 1;
+    min-width: 300px;
+}
+}
+/* للشاشات الصغيرة (الموبايل - أقل من 768px) */
+@media (max-width: 768px) {
+.dashboard-grid {
+    /* جعل كل العناصر تحت بعضها في عمود واحد */
+    grid-template-columns: 1fr;
+    padding: 10px;
+    gap: 15px;
+}
+.left-section {
+    grid-column: span 1;
+    flex-direction: column;
+}
+/* جعل الجدول قابلاً للتمرير أفقياً */
+.top-orders-box {
+    overflow-x: auto;
+}
+.status-table {
+    min-width: 350px; /* لضمان عدم تكدس البيانات داخل الجدول */
+}
+.tab-controls {
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.tab-btn {
+        flex: 1;
+        padding: 8px 10px;
+        text-align: center;
+    }
+    .card-actions {
+        flex-wrap: wrap;
+    }
+    .btn {
+        width: 100% !important; /* جعل الأزرار تأخذ العرض الكامل في الموبايل */
+    }
+    .upload-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .upload-input {
+        width: 100%;
+    }
+}
+/* ===== FIX HEADER RESPONSIVE WITHOUT TOUCHING ORIGINAL ===== */
+@media (max-width: 1024px) {
+    .nav-right {
+        position: static !important;
+        right: 0 !important;
+        gap: 15px;
+    }
+    .logo img {
+        position: static !important;
+        right: 0 !important;
+        top: 0 !important;
+        width: 90px;
+    }
+    .navbar {
+        flex-wrap: wrap;
+        height: auto;
+    }
+}
+/*TABLET */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+    /* ترتيب العناصر */
+    .nav-right {
+        gap: 10px;
+    }
+    .nav-left {
+        gap: 8px;
+    }
+    /* تصغير العناصر */
+    .login-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    .notification-container {
+        width: 28px;
+        height: 28px;
+    }
+    .user-icon-img {
+        width: 14px;
+        height: 14px;
+    }
+    /* زر المنيو */
+    .menu-toggle {
+        display: block !important;
+        font-size: 22px;
+        cursor: pointer;
+    }
+}
+/* MOBILE */
+@media (max-width: 480px) {
+    .logo img {
+        width: 75px;
+    }
+    .login-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+    .notification-container {
+        width: 25px;
+        height: 25px;
+    }
+    .icon-settings {
+        font-size: 1rem;
+    }
+}

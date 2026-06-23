@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإسعافات الأوليه - للاختناق</title>
+    <link rel="stylesheet" href="../css-files/suffocation.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../html-files/home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../html-files/hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../html-files/donating-medicine.html" >🩸 تبرع بالدواء</a>
+                        <a href="../html-files/order-medicine.html" >📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../html-files/first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left">
+            <a href="../html-files/sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+             <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="./profile/user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="./profile/user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav> 
+    <div class="container">
+        <div class="title">الإسعافات الأولية لحالة الاختناق</div>
+        <div class="description">
+        تحدث حالة الاختناق عندما يسد مجرى الهواء بجسم غريب مثل الطعام أو أي جسم آخر، مما يمنع وصول الهواء إلى الرئتين، وقد يؤدي ذلك إلى صعوبة شديدة في التنفس وقد يشكل خطرًا على حياة المصاب إذا لم يتم التدخل بسرعة
+        </div>
+        <div class="card">
+            <div class="text">
+                <h2>خطوات الإسعافات الأولية للاختناق عند البالغين</h2>
+                <ul>
+                    <li>شجع المصاب على السعال بقوة لمحاولة إخراج الجسم العالق.</li>
+                    <li>إذا لم ينجح ذلك، اجعل المصاب ينحني قليلًا إلى الأمام ووجه خمس ضربات قوية بين الكتفين.</li>
+                    <li>إذا استمر الاختناق، استخدم مناورة هيمليك بالضغط على البطن إلى الداخل وإلى الأعلى عدة مرات.</li>
+                    <li>إذا فقد المصاب الوعي، يجب الاتصال بالإسعاف فورًا والبدء في الإنعاش القلبي الرئوي إن أمكن</li>
+                </ul>
+            </div>
+            <div class="image">
+            <img src="../imges/اختاق.jpg" alt="اختناق">
+        </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-section">
+            <h3>معلومات عنا</h3>
+            <p>منصة صحية متكاملة تهدف إلى تسهيل الوصول للخدمات الطبية</p>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل معانا</h3>
+            <p>✉️ info@caremate.com</p>
+            <p>📞 +20 123-456-7890</p>
+        </div>
+    </footer>
+    <script>
+        // 1. تشغيل قائمة الهمبرجر
+        const menuIcon = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        menuIcon.onclick = function() {
+            navList.classList.toggle('active');
+        };
+    </script>
+</body>
+</html>
+
+

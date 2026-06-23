@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+/* --- Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    /* خلفية متدرجة من أزرق فاتح إلى أزرق أغمق */
+    background: linear-gradient(135deg,#f7f7f7,#4f8aa6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+/* --- Container --- */
+.reset-container {
+    background: #ffffff;
+    padding: 50px 40px;
+    border-radius: 20px;
+    width: 380px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    text-align: center;
+}
+/* --- Title --- */
+.reset-container h2 {
+    color: #1a3a5a;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.reset-container p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+/* --- Input --- */
+.reset-container input {
+    width: 100%;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border: 1px solid #cce0f5;
+    border-radius: 12px;
+    font-size: 15px;
+    background: #f7faff;
+    color: #1a3a5a;
+}
+.reset-container input::placeholder {
+    color: #7da3c4;
+}
+a{
+    text-decoration-line: none;
+}
+/* --- Button with gradient --- */
+.reset-container button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #4a86a8, #1a3a5a);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+/* --- Back login --- */
+.back-login {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #4a86a8;
+    cursor: pointer;
+}
+.success-msg button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #4a86a8, #1a3a5a);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600; /* يخليه أوضح */
+    letter-spacing: 0.5px; /* مسافة بين الحروف */
+    font-size: 15px;
+}
+/* أضف هذا الجزء أو عدله في ملف CSS الخاص بك */
+.success-msg {
+    display: none; /* مخفية افتراضياً */
+    background: #e1f2ff; /* لون سماوي فاتح جداً */
+    color: #1a3a5a;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    border: 1px solid #cce0f5;
+}
+/* هذا الكلاس سنضيفه بواسطة JavaScript */
+.success-msg.show {
+    display: block;
+    animation: fadeIn 0.5s ease; /* تأثير ظهور ناعم */
+}
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f0f6fc; }
+    ::-webkit-scrollbar-thumb { background: #9ac9e8; border-radius: 10px; }
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 768px) {
+.reset-container {
+    width: 90%;       /* يقل العرض ليتناسب مع شاشة الهاتف */
+    padding: 30px 20px;  /* تقليل الحشو */
+}
+.reset-container h2 {
+    font-size: 24px;  /* تصغير العنوان */
+}
+.reset-container p {
+    font-size: 13px;  /* تصغير النص */
+    margin-bottom: 20px;
+}
+.reset-container input {
+    padding: 12px 14px;  /* تقليل حجم الحقول */
+    font-size: 14px;
+}
+.reset-container button {
+    padding: 12px;
+    font-size: 15px;
+}
+.back-login {
+    font-size: 13px;   /* تصغير رابط العودة */
+    margin-top: 15px;
+}
+.success-msg {
+    font-size: 13px;   /* تصغير رسالة النجاح */
+    padding: 10px;
+}
+}

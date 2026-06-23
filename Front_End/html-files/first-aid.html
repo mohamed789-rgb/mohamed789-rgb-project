@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareMate - الإسعافات الأولية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css-files/first-aid.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-right">
+            <div class="menu-toggle" id="mobile-menu">
+                <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+            </div>
+            <div class="logo"><img src="../imges/f2.jpeg" alt="Logo"></div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="../html-files/home.html">🏠 الصفحة الرئيسية</a></li>
+                <li><a href="../html-files/hospitals.html">🔍 العثور على مستشفى</a></li>
+                <li class="dropdown">
+                    💊 خدمات الدواء ▾
+                    <div class="dropdown-content">
+                        <a href="../html-files/donating-medicine.html" >🩸 تبرع بالدواء</a>
+                        <a href="../html-files/order-medicine.html" >📦 طلب الدواء</a>
+                    </div>
+                </li>
+                <li><a href="../html-files/first-aid.html">🚑 الإسعافات الأولية</a></li>
+            </ul>
+        </div>
+        <div class="nav-left">
+            <a href="../html-files/sign-in.html" style="text-decoration-line: none;">
+            <button class="login-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="user-icon-img" alt="user">
+                تسجيل دخول
+            </button>
+            </a>
+             <div class="settings-icons">
+                <div class="notification-container">
+                    <span style="color:#333; font-size:1rem;"><a href="./profile/user_notification.html"style="list-style: none;text-decoration: none; ">🔔</a></span>
+                    <span class="red-dot"></span>
+                </div>
+                <span class="icon-settings"><a href="./profile/user_setting.html"style="list-style: none;text-decoration: none ;">⚙️</a></span>
+            </div>
+        </div>
+    </nav>
+    <div class="top-section-sky">
+        <div class="warning-box">
+            <div class="warning-header">
+                <i class="fas fa-triangle-exclamation"></i>
+                <h3>تحذير</h3>
+            </div>
+            <p>مرحباً عزيزي المستخدم، يرجى العلم أنه في حالة حدوث أي طارئ مثل الحوادث أو الحرائق أو عند الحاجة إلى مساعدة عاجلة، يجب الاتصال فوراً بأرقام الطوارئ التالية للحصول على المساعدة في أسرع وقت ممكن</p>
+        </div>
+        <div class="emergency-grid">
+            <div class="emergency-card">
+                <i class="fas fa-truck-medical"></i>
+                <h4>الإسعاف</h4>
+                <span class="number">123</span>
+                <a href="tel:123" class="call-btn">الإتصال <i class="fas fa-phone-flip"></i></a>
+            </div>
+            <div class="emergency-card">
+                <i class="fas fa-shield-halved"></i>
+                <h4>الشرطة</h4>
+                <span class="number">122</span>
+                <a href="tel:122" class="call-btn">الإتصال <i class="fas fa-phone-flip"></i></a>
+            </div>
+            <div class="emergency-card">
+                <i class="fas fa-fire-extinguisher"></i>
+                <h4>المطافئ</h4>
+                <span class="number">180</span>
+                <a href="tel:180" class="call-btn">الإتصال <i class="fas fa-phone-flip"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-section">
+        <h2 class="section-title">اختر نوع الإسعافات الأولية</h2>
+        <div style="display:flex; justify-content:center; gap:40px; flex-wrap:wrap;">
+            <div class="selection-card">
+                <div class="selection-info">
+                    <h3>إسعافات أولية للبالغين</h3>
+                    <p>تعلم كيفية التعامل مع الإصابات الشائعة لدى البالغين مثل الجروح، النزيف، الحروق...</p>
+                    <a href="../html-files/first-aid-for adult.html" class="view-btn">عرض الإسعافات</a>
+                </div>
+                <img src="../imges/adult.jpeg" alt="Adult Aid" style="width: 100px;">
+            </div>
+            <div class="selection-card">
+                <div class="selection-info">
+                    <h3>إسعافات أولية للأطفال</h3>
+                    <p>تعلم كيفية التعامل مع الإصابات الشائعة لدى الأطفال مثل الجروح، النزيف، الحروق...</p>
+                    <a href="../html-files/first-aid-for children.html" class="view-btn">عرض الإسعافات</a>
+                </div>
+                <img src="../imges/baby.jpeg" alt="Child Aid" style="width: 100px;">
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-section">
+            <h3>معلومات عنا</h3>
+            <p>منصة صحية متكاملة تهدف إلى تسهيل الوصول للخدمات الطبية</p>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل معانا</h3>
+            <p>✉️ info@caremate.com</p>
+            <p>📞 +20 123-456-7890</p>
+        </div>
+    </footer>
+    <script>
+        function openSettings() {
+            window.location.href = 'settings.html';
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            var menuBtn = document.getElementById('mobile-menu');
+            var navList = document.getElementById('nav-list');
+            var menuIcon = document.getElementById('menu-icon');
+            if (menuBtn && navList) {
+                menuBtn.onclick = function () {
+                    navList.classList.toggle('active');
+                    menuIcon.innerHTML = navList.classList.contains('active') ? '&#10005;' : '&#9776;';
+                };
+            }
+        });
+    </script>
+    <script>
+        // 1. تشغيل قائمة الهمبرجر
+        const menuIcon = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        menuIcon.onclick = function() {
+            navList.classList.toggle('active');
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Care Mate – Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+    :root{
+      --sidebar-bg:#1a3a6b;
+      --sidebar-hover:#1a4fa8;
+      --main-bg:#dce9f7;
+      --blue-btn:#2B59FF;
+      --blue-btn-hover:#1a4fa8;
+      --border:#c8d9ef;
+      --text-dark:#1a2740;
+      --muted:#64748b;
+      --shadow:0 2px 12px rgba(30,64,128,.10);
+      --header-h:60px;
+      --sidebar-w:220px;
+      --radius:12px;
+      --trans:.25s ease;
+    }
+
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--main-bg);color:var(--text-dark);min-height:100vh;overflow-x:hidden}
+
+    /* ════ HEADER ════ */
+    .top-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:200;display:flex;align-items:stretch;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+    .header-brand{background:#1a3a6b;display:flex;align-items:center;gap:8px;width:var(--sidebar-w);flex-shrink:0;padding:0 16px 0 14px}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:5px 8px;flex-shrink:0}
+    .hamburger span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:all .25s}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .brand-wrap{display:flex;align-items:center;gap:8px}
+    .brand-logo{width:38px;height:38px;object-fit:cover;border-radius:50%;flex-shrink:0}
+    .brand{font-size:clamp(.92rem,1.7vw,1.2rem);font-weight:700;color:#fff;white-space:nowrap;letter-spacing:.01em}
+    .header-right{flex:1;background:#fff;display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 20px;border-bottom:3px solid #90c4f0;min-width:0}
+    .welcome-text{font-size:clamp(.76rem,1.2vw,.95rem);font-weight:400;color:#444;white-space:nowrap}
+    .welcome-text strong{font-weight:800;color:#111}
+    .hdr-avatar{width:38px;height:38px;border-radius:50%;background:#1a3a6b;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:700;color:#fff;border:2px solid #8ecae6;overflow:hidden;flex-shrink:0}
+    .hdr-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+    .header-controls{display:flex;align-items:center;gap:6px;background:#cce8f5;border:1.5px solid #8ecae6;border-radius:8px;padding:4px 10px;flex-shrink:0}
+    .bell-btn{background:none;border:none;cursor:pointer;color:#1a3a6b;padding:2px 6px;position:relative;display:flex;align-items:center}
+    .bell-btn .dot{position:absolute;top:0;right:0;width:7px;height:7px;border-radius:50%;background:#ef4444;border:1.5px solid #cce8f5}
+    .logout-btn{background:transparent;color:#222;border:none;padding:4px 8px;font-size:clamp(.72rem,.95vw,.85rem);font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:opacity .15s}
+    .logout-btn:hover{opacity:.7}
+
+    /* ════ OVERLAY ════ */
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+    .sidebar-overlay.open{display:block}
+
+    /* ════ LAYOUT ════ */
+    .layout{display:flex;margin-top:var(--header-h);min-height:calc(100vh - var(--header-h))}
+
+    /* ════ SIDEBAR ════ */
+    .sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);position:fixed;top:var(--header-h);left:0;bottom:0;display:flex;flex-direction:column;padding-top:10px;overflow-y:auto;transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:160}
+    .sidebar a{display:flex;align-items:center;gap:14px;color:#fff;text-decoration:none;font-size:clamp(.88rem,1.2vw,1.02rem);font-weight:700;padding:15px 22px;border-left:4px solid transparent;transition:background .15s,border-color .15s,color .15s;cursor:pointer;white-space:nowrap;letter-spacing:.01em}
+    .sidebar a i{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0}
+    .sidebar a:hover{background:var(--sidebar-hover);border-left-color:#7ab8ff}
+    .sidebar a.active{background:var(--main-bg);color:#1a4fa8;border-left-color:#2B59FF;font-weight:800}
+
+    /* ════ MAIN / PAGES ════ */
+    .main{margin-left:var(--sidebar-w);flex:1;background:var(--main-bg);min-width:0}
+    .page{display:none;padding:clamp(14px,3vw,36px) clamp(12px,3vw,36px) 48px}
+    .page.active{display:block}
+    .page-title{color:#2884fc;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:800;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+    .page-title i{font-size:clamp(1.1rem,2.2vw,1.6rem);color:#2B59FF}
+
+    /* ════════════════════════════
+       HOME PAGE
+    ════════════════════════════ */
+    .hero{background:linear-gradient(135deg,#c8dcf8 0%,#daeafd 40%,#e8f4ff 100%);border-radius:var(--radius);padding:clamp(22px,4vw,40px);margin-bottom:24px;position:relative;overflow:hidden;min-height:160px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:20px}
+    .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(147,197,253,.4) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+    .hero-text{display:flex;flex-direction:column;justify-content:center;flex:1;position:relative;z-index:1}
+    .hero-title{font-size:clamp(18px,3vw,26px);font-weight:800;color:var(--text-dark);margin-bottom:8px}
+    .hero-title .wave{margin-right:6px}
+    .hero-title .highlight{color:#2B59FF}
+    .hero-sub{font-size:clamp(12px,1.4vw,14px);color:var(--muted);font-weight:500}
+    .hero-img{height:clamp(120px,18vw,180px);flex-shrink:0;border-radius:var(--radius);display:block;position:relative;z-index:1;align-self:flex-end}
+    .cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .card:first-child{grid-column: span 2 ;}
+    .home-card{background:#fff;border-radius:var(--radius);padding:clamp(18px,2.5vw,26px);box-shadow:var(--shadow);border:1px solid rgba(197,215,237,.8);cursor:pointer;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit}
+    .home-card:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(30,58,138,.15)}
+    .home-card-row{display:flex;align-items:center;gap:12px}
+    .home-card-icon{width:46px;height:46px;border-radius:11px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .home-card-icon i{font-size:1.3rem;color:#2B59FF}
+    .home-card-title{font-size:clamp(14px,1.8vw,17px);font-weight:800;color:var(--text-dark)}
+    .home-card-desc{font-size:clamp(12px,1.2vw,13px);color:var(--muted);font-weight:500;line-height:1.5}
+
+    /* ════════════════════════════
+       HOSPITAL INFO PAGE
+    ════════════════════════════ */
+    .info-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;max-width:900px}
+    .info-card-header{background:#22477f;color:#fff;font-size:15px;font-weight:700;padding:14px 22px}
+    .form-row{display:grid;grid-template-columns:180px 1fr;align-items:start;gap:12px;padding:14px 22px;border-bottom:1px solid var(--border)}
+    .form-row:last-child{border-bottom:none}
+    .form-row label{font-weight:700;font-size:14px;padding-top:10px;color:var(--text-dark)}
+    .form-row input,.form-row textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 13px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);background:#fff;transition:border-color var(--trans),box-shadow var(--trans);resize:vertical}
+    .form-row input:focus,.form-row textarea:focus{outline:none;border-color:#3a7bd5;box-shadow:0 0 0 3px rgba(37,99,192,.12)}
+    .form-row input:disabled,.form-row textarea:disabled{background:#f1f5fb;color:var(--muted);cursor:default}
+    .checks-grid{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding-top:6px}
+    .check-item{display:flex;align-items:center;gap:8px;font-size:14px}
+    .check-item input[type="checkbox"]{width:20px;height:20px;accent-color:#2563c0;cursor:pointer;border-radius:4px;flex-shrink:0}
+    .check-item input[type="checkbox"]:disabled{cursor:default}
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap;padding:16px 22px;border-top:1px solid var(--border)}
+    .ibtn{padding:10px 26px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:background var(--trans),transform .1s,opacity var(--trans)}
+    .ibtn:active{transform:scale(.97)}
+    .ibtn:disabled{opacity:.5;cursor:not-allowed}
+    .ibtn-primary{background:#2563c0;color:#fff}
+    .ibtn-primary:hover:not(:disabled){background:#1d4ed8}
+    .ibtn-success{background:#16a34a;color:#fff}
+    .ibtn-success:hover:not(:disabled){background:#15803d}
+    .ibtn-outline{background:#fff;color:var(--text-dark);border:1.5px solid var(--border)}
+    .ibtn-outline:hover:not(:disabled){background:#f1f5fb}
+
+    /* ════════════════════════════
+       PATIENT PAGE
+    ════════════════════════════ */
+    .pt-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 18px;border-bottom:1.5px solid var(--border)}
+    .btn-add{display:flex;align-items:center;gap:7px;background:#2B59FF;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:background var(--trans);white-space:nowrap}
+    .btn-add:hover{background:#1a4fa8}
+    .search-wrap{position:relative;flex:1;min-width:160px;max-width:280px}
+    .search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+    .search-wrap input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 12px 9px 36px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);background:#fff;transition:border-color var(--trans)}
+    .search-wrap input:focus{outline:none;border-color:#3a7bd5}
+    .pt-filters{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+    .pt-select{border:1.5px solid var(--border);border-radius:8px;padding:9px 32px 9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-dark);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;cursor:pointer;appearance:none;transition:border-color var(--trans)}
+    .pt-select:focus{outline:none;border-color:#3a7bd5}
+    .table-wrap{overflow-x:auto}
+    .pt-table{width:100%;border-collapse:collapse;min-width:680px}
+    .pt-table thead tr{border-bottom:2px solid var(--border)}
+    .pt-table thead th{padding:12px 13px;text-align:left;font-size:13px;font-weight:700;color:#2B59FF;white-space:nowrap;user-select:none}
+    th.sortable{cursor:pointer}
+    th.sortable:hover{color:#1a4fa8}
+    .sort-icon{margin-left:4px;font-size:11px;opacity:.6}
+    .pt-table tbody tr{border-bottom:1px solid #eef2f9;transition:background var(--trans)}
+    .pt-table tbody tr:last-child{border-bottom:none}
+    .pt-table tbody tr:hover{background:#f4f8ff}
+    .pt-table td{padding:12px 13px;font-size:13px;color:var(--text-dark);vertical-align:middle;white-space:nowrap}
+    .patient-cell{display:flex;align-items:center;gap:10px}
+    .avatar-sm{width:32px;height:32px;border-radius:50%;background:#3a7bd5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+    .pt-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap}
+    .pt-badge-active{background:#dcfce7;color:#166534}
+    .pt-badge-inactive{background:#fee2e2;color:#991b1b}
+    .pt-actions{display:flex;align-items:center;gap:2px}
+    .act-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:6px;display:flex;align-items:center;transition:background var(--trans)}
+    .act-btn:hover.edit{background:#eff6ff;color:#2563c0}
+    .act-btn:hover.view{background:#f0fdf4;color:#16a34a}
+    .act-btn:hover.del{background:#fff1f1;color:#dc2626}
+    .act-sep{color:var(--border);font-size:16px;padding:0 2px;user-select:none}
+    .table-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:13px 18px;border-top:1.5px solid var(--border)}
+    .entries-info{font-size:13px;color:#2B59FF;font-weight:600}
+    .pagination{display:flex;align-items:center;gap:6px}
+    .pg-btn{background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 13px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--text-dark);cursor:pointer;transition:all var(--trans)}
+    .pg-btn:hover:not(:disabled){border-color:#2B59FF;color:#2B59FF}
+    .pg-btn:disabled{opacity:.45;cursor:not-allowed}
+    .pg-btn.active{background:#2B59FF;color:#fff;border-color:#2B59FF}
+    .no-results{text-align:center;padding:36px 20px;color:var(--muted);font-size:14px}
+
+    /* Patient modals */
+    .pm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;align-items:center;justify-content:center;padding:20px}
+    .pm-overlay.open{display:flex}
+    .pm-modal{background:#fff;border-radius:14px;width:100%;max-width:520px;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .25s ease;max-height:90vh;overflow-y:auto}
+    @keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+    .pm-header{background:#22477f;color:#fff;padding:16px 22px;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between;font-size:16px;font-weight:700}
+    .pm-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:22px;cursor:pointer;line-height:1}
+    .pm-close:hover{color:#fff}
+    .pm-body{padding:22px}
+    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .field-group{display:flex;flex-direction:column;gap:6px}
+    .field-group.full{grid-column:1/-1}
+    .field-group label{font-size:12px;font-weight:700;color:var(--muted)}
+    .field-group input,.field-group select,.field-group textarea{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);background:#fff;transition:border-color var(--trans);width:100%}
+    .field-group input:focus,.field-group select:focus{outline:none;border-color:#3a7bd5}
+    .field-group textarea{resize:vertical;min-height:76px}
+    .pm-footer{display:flex;gap:10px;justify-content:flex-end;padding:0 22px 18px}
+    .btn-cancel-sm{background:#fff;border:1.5px solid var(--border);color:var(--text-dark);border-radius:8px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background var(--trans)}
+    .btn-cancel-sm:hover{background:#f1f5fb}
+    .btn-save-sm{background:#2B59FF;color:#fff;border:none;border-radius:8px;padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:background var(--trans)}
+    .btn-save-sm:hover{background:#1a4fa8}
+    .btn-danger-sm{background:#dc2626;color:#fff;border:none;border-radius:8px;padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:background var(--trans)}
+    .btn-danger-sm:hover{background:#b91c1c}
+    .view-row{display:flex;padding:9px 0;border-bottom:1px solid #f0f4fa;gap:12px}
+    .view-row:last-child{border-bottom:none}
+    .view-label{font-weight:700;color:var(--muted);font-size:12px;min-width:120px}
+    .view-val{font-size:13px;color:var(--text-dark)}
+    .confirm-body{padding:26px 22px;text-align:center}
+    .confirm-icon{font-size:42px;margin-bottom:12px}
+    .confirm-msg{font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+    .confirm-sub{font-size:13px;color:var(--muted);margin-bottom:22px}
+    .confirm-btns{display:flex;gap:10px;justify-content:center}
+
+    /* ════════════════════════════
+       SETTINGS / GENERAL PAGE
+    ════════════════════════════ */
+    .settings-card{background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(43,89,255,.09);width:100%;max-width:100%;overflow:hidden}
+    .tabs{display:flex;border-bottom:2px solid #eef2f8;gap:10px;padding:0 20px}
+    .tab{padding:14px 18px;color:#999;cursor:pointer;font-size:clamp(.92rem,1.4vw,1.05rem);font-weight:600;position:relative;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s;background:none;border-left:none;border-right:none;border-top:none;font-family:'DM Sans',sans-serif}
+    .tab.active{color:#2B59FF;font-weight:800;border-bottom-color:#2B59FF}
+    .tab:hover:not(.active){color:#444}
+    .form-group{display:flex;align-items:center;padding:16px 28px;border-bottom:1.5px solid #eef2f8;gap:16px;flex-wrap:wrap}
+    .form-group:last-of-type{border-bottom:none}
+    .form-group label{display:flex;align-items:center;gap:8px;min-width:160px;flex-shrink:0;font-size:clamp(.9rem,1.3vw,1rem);font-weight:700;color:#1a1a1a}
+    .form-group label i{font-size:1.1rem;color:#2B59FF}
+    .form-group select{flex:1;min-width:140px;max-width:600px;height:40px;padding:0 40px 0 14px;border:1.5px solid var(--border);border-radius:8px;font-size:clamp(.85rem,1.2vw,.95rem);font-family:'DM Sans',sans-serif;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>") no-repeat right 12px center;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .15s}
+    .form-group select:focus{outline:none;border-color:#2B59FF;box-shadow:0 0 0 3px rgba(43,89,255,.1)}
+    .themes-container{display:flex;gap:12px;flex-wrap:wrap}
+    .theme-option{display:flex;align-items:center;gap:8px;padding:8px 18px;border-radius:20px;border:1.5px solid var(--border);cursor:pointer;font-size:.9rem;font-weight:600;color:#555;transition:all .2s;user-select:none}
+    .theme-option input[type="radio"]{display:none}
+    .theme-option i{display:none;font-size:.9rem}
+    .theme-option.active{background:#2B59FF;color:#fff;border-color:#2B59FF}
+    .theme-option.active i{display:inline-block;color:#fff}
+    .toggle-switch-container{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .switch{position:relative;display:inline-block;width:26px;height:26px;flex-shrink:0}
+    .switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+    .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#d0d5dd;transition:.3s;border-radius:34px;pointer-events:none}
+    .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#fff;transition:.3s;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+    .switch input:checked~.slider{background:#2B59FF}
+    .switch input:checked~.slider:before{transform:translateX(0px)}
+    .label-text{font-weight:600;color:#444;font-size:.9rem}
+    .info-note{display:flex;align-items:center;gap:8px;margin:0 28px 12px calc(28px + 160px);background:#e8f0fe;color:#5f6368;padding:7px 16px;border-radius:20px;font-size:clamp(.78rem,1.1vw,.85rem);width:fit-content;max-width:calc(100% - 56px - 160px)}
+    .info-note i{font-size:.9rem;color:#1e40af;flex-shrink:0}
+    .time-picker{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .time-box{background:#2B59FF;color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;font-size:.9rem;cursor:text;min-width:80px;text-align:center}
+    .time-box[contenteditable="true"]{outline:2px dashed #90c4f0;background:#1a4fa8}
+    .to-text{color:#555;font-weight:700;font-size:.9rem}
+    .form-actions{display:flex;gap:16px;padding:18px 28px 22px 204px;border-top:1.5px solid #eef2f8}
+    .gbtn{padding:9px 28px;border-radius:8px;border:none;font-weight:700;cursor:pointer;font-size:clamp(.82rem,1.2vw,.92rem);font-family:'DM Sans',sans-serif;transition:background .18s,opacity .15s,transform .1s}
+    .gbtn-edit,.gbtn-save{background:#2B59FF;color:#fff}
+    .gbtn-edit:hover,.gbtn-save:hover{background:#1a4fa8}
+    .gbtn-cancel{background:#f1f4fa;color:#555;border:1.5px solid var(--border)}
+    .gbtn-cancel:hover{background:#e4eaf5}
+    .gbtn:active{transform:scale(.97)}
+
+    /* Settings confirm modals */
+    .smodal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,50,.45);z-index:300;align-items:center;justify-content:center;padding:16px}
+    .smodal-overlay.open{display:flex}
+    .smodal{background:#fff;border-radius:14px;padding:28px 28px 22px;width:100%;max-width:340px;box-shadow:0 8px 40px rgba(0,0,0,.18);text-align:center;animation:modalIn .18s ease}
+    @keyframes modalIn{from{transform:translateY(18px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+    .smodal h3{font-size:1.05rem;font-weight:700;color:#1a2740;margin-bottom:8px}
+    .smodal p{font-size:.9rem;color:#4a5a72;margin-bottom:20px}
+    .smodal-btns{display:flex;gap:10px;justify-content:center}
+    .smodal-cancel{background:#f0f4fa;color:#4a5a72;border:none;border-radius:8px;padding:9px 20px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+    .smodal-cancel:hover{background:#e0e8f5}
+    .smodal-confirm{background:#2B59FF;color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+    .smodal-confirm:hover{background:#1a4fa8}
+
+    /* ════ TOAST ════ */
+    .toast{position:fixed;bottom:22px;right:22px;background:#1a3a6b;color:#fff;padding:10px 18px;border-radius:8px;font-size:.9rem;font-weight:500;box-shadow:0 4px 18px rgba(0,0,0,.18);z-index:500;opacity:0;transform:translateY(12px);transition:opacity .25s,transform .25s;pointer-events:none;max-width:calc(100vw - 32px)}
+    .toast.show{opacity:1;transform:none}
+    .toast.success{background:#15803d}
+    .toast.error{background:#b91c1c}
+
+    /* ════ DARK MODE ════ */
+    body.dark-mode{background:#1a1c23;color:#e5e7eb}
+    body.dark-mode .page{background:#1a1c23}
+    body.dark-mode .main{background:#1a1c23}
+    body.dark-mode .sidebar{background:#0d1f4a}
+    body.dark-mode .top-header .header-brand{background:#0d1f4a}
+    body.dark-mode .header-right{background:#1e2a50;border-bottom-color:#2B59FF}
+    body.dark-mode .welcome-text{color:#c5d5f0}
+    body.dark-mode .welcome-text strong{color:#fff}
+    body.dark-mode .page-title{color:#6b9fff}
+    body.dark-mode .hero{background:linear-gradient(135deg,#1e2a50 0%,#162040 100%)}
+    body.dark-mode .hero-title{color:#e5e7eb}
+    body.dark-mode .home-card{background:#24262d;border-color:#3f414a}
+    body.dark-mode .home-card-title{color:#e5e7eb}
+    body.dark-mode .info-card{background:#24262d}
+    body.dark-mode .info-card-header{background:#162040}
+    body.dark-mode .form-row{border-bottom-color:#3f414a}
+    body.dark-mode .form-row input,body.dark-mode .form-row textarea{background:#2e3240;border-color:#4a5568;color:#e5e7eb}
+    body.dark-mode .form-row input:disabled,body.dark-mode .form-row textarea:disabled{background:#1e2a40;color:#8899aa}
+    body.dark-mode .form-row label{color:#c5d5f0}
+    body.dark-mode .btn-row{border-top-color:#3f414a}
+    body.dark-mode .ibtn-outline{background:#2e3240;border-color:#4a5568;color:#e5e7eb}
+    body.dark-mode .pt-card{background:#24262d}
+    body.dark-mode .toolbar{border-bottom-color:#3f414a}
+    body.dark-mode .search-wrap input,.dark-mode .pt-select{background:#2e3240;border-color:#4a5568;color:#e5e7eb}
+    body.dark-mode .pt-table thead th{color:#6b9fff}
+    body.dark-mode .pt-table tbody tr{border-bottom-color:#3f414a}
+    body.dark-mode .pt-table tbody tr:hover{background:#1e2a40}
+    body.dark-mode .pt-table td{color:#e5e7eb}
+    body.dark-mode .table-footer{border-top-color:#3f414a}
+    body.dark-mode .settings-card{background:#24262d;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+    body.dark-mode .tabs{border-bottom-color:#3f414a}
+    body.dark-mode .form-group{border-bottom-color:#3f414a}
+    body.dark-mode .form-group label{color:#c5d5f0}
+    body.dark-mode .form-group select{background:#333;color:#e5e7eb;border-color:#4a5568}
+    body.dark-mode .label-text{color:#c5d5f0}
+    body.dark-mode .info-note{background:#1e3a5f;color:#a0bce0}
+    body.dark-mode .form-actions{border-top-color:#3f414a}
+    body.dark-mode .gbtn-cancel{background:#333;color:#c5d5f0;border-color:#4a5568}
+    body.dark-mode .smodal{background:#24262d}
+    body.dark-mode .smodal h3{color:#e5e7eb}
+    body.dark-mode .smodal p{color:#a0aec0}
+    body.dark-mode .pm-modal{background:#24262d}
+    body.dark-mode .field-group input,body.dark-mode .field-group select,body.dark-mode .field-group textarea{background:#2e3240;border-color:#4a5568;color:#e5e7eb}
+
+    /* ════ RTL ════ */
+    [dir="rtl"] .sidebar{left:auto;right:0}
+    [dir="rtl"] .main{margin-left:0;margin-right:var(--sidebar-w)}
+    [dir="rtl"] .sidebar a{border-left:none;border-right:4px solid transparent}
+    [dir="rtl"] .sidebar a:hover{border-right-color:#7ab8ff}
+    [dir="rtl"] .sidebar a.active{border-right-color:#2B59FF}
+    [dir="rtl"] .header-brand{width:var(--sidebar-w)}
+    [dir="rtl"] .info-note{margin:0 calc(28px + 160px) 12px 28px}
+    [dir="rtl"] .form-actions{padding:18px calc(28px + 220px) 22px 28px;margin-left:0;margin-right:-45px}
+    @media(max-width:768px){
+      [dir="rtl"] .sidebar{transform:translateX(100%);right:0;left:auto}
+      [dir="rtl"] .sidebar.open{transform:translateX(0)}
+      [dir="rtl"] .main{margin-right:0!important}
+      [dir="rtl"] .form-actions{padding:14px 18px 18px;margin:0}
+      [dir="rtl"] .info-note{margin:0 18px 12px 18px;max-width:calc(100% - 36px)}
+    }
+
+    /* ════ RESPONSIVE ════ */
+    @media(min-width:1400px){:root{--sidebar-w:240px}}
+    @media(max-width:1024px){:root{--sidebar-w:190px}.page{padding:24px 20px 40px}}
+    @media(max-width:860px){
+      :root{--sidebar-w:170px}
+      .welcome-text{display:none}
+      .sidebar a{padding:13px 14px;font-size:.86rem;gap:10px}
+      .form-group label{min-width:130px}
+    }
+    @media(max-width:768px){
+      .hamburger{display:flex}
+      .header-brand{width:auto}
+      .sidebar{width:230px!important;transform:translateX(-100%);box-shadow:4px 0 24px rgba(0,0,0,.22)}
+      .sidebar.open{transform:translateX(0)}
+      .main{margin-left:0!important}
+      .page{padding:20px 14px 40px}
+      .form-group{flex-direction:column;align-items:flex-start;padding:14px 18px;gap:10px}
+      .form-group label{min-width:unset}
+      .form-group select{max-width:100%;width:100%}
+      .form-actions{padding:14px 18px 18px;gap:12px}
+      .gbtn{padding:9px 22px;width:auto}
+      .info-note{margin:0 18px 12px;max-width:calc(100% - 36px)}
+      .switch{width:46px;height:26px}
+      .switch input:checked~.slider:before{transform:translateX(20px)}
+      .form-row{grid-template-columns:1fr;gap:6px}
+      .form-row label{padding-top:0}
+      .cards-grid{grid-template-columns:1fr}
+      .hero{flex-direction:column;align-items:flex-start;min-height:auto}
+      .hero-img{display:none}
+      .pt-filters{margin-left:0}
+      .modal-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:480px){
+      :root{--header-h:54px}
+      .brand{font-size:.86rem}
+      .header-brand{padding:0 10px 0 8px}
+      .brand-logo{width:30px;height:30px}
+      .header-right{gap:6px;padding:0 10px}
+      .hdr-avatar{width:30px;height:30px;font-size:.76rem}
+      .header-controls{padding:3px 7px;gap:4px}
+      .logout-btn{font-size:.7rem;padding:3px 6px}
+      .page-title{font-size:1.1rem;margin-bottom:14px}
+      .form-group{padding:12px 14px}
+      .form-actions{flex-wrap:wrap;padding:12px 14px 16px}
+      .gbtn{flex:1;text-align:center;min-width:100px}
+      .themes-container{gap:8px}
+      .theme-option{padding:7px 14px;font-size:.84rem}
+      .info-note{margin:0 14px 10px;max-width:calc(100% - 28px)}
+      .btn-row{padding:14px}
+      .ibtn{padding:9px 18px;font-size:13px}
+    }
+    @media(max-width:360px){
+      :root{--header-h:50px}
+      .brand{font-size:.78rem}
+      .logout-btn{display:none}
+      .page-title{font-size:1rem}
+      .page{padding:12px 8px 28px}
+    }
+    @media print{
+      .sidebar,.top-header,.form-actions,.hamburger,.sidebar-overlay,.toolbar,.btn-row,.pt-actions,.table-footer{display:none!important}
+      .main{margin-left:0!important;padding:0}
+      .layout{margin-top:0}
+    }
+    /* ════ ACCOUNT PAGE ════ */
+    .user-profile-info{display:flex;align-items:center;gap:14px;margin:0 24px 16px}
+    .admin-avatar{width:60px;height:60px;border-radius:8px;object-fit:cover;border:1.5px solid #c8d9ef;box-shadow:0 2px 6px rgba(0,0,0,.10);flex-shrink:0}
+    .admin-name{font-weight:800;font-size:1.3rem;color:#1a1a1a;margin-bottom:9px}
+    .admin-role{font-weight:600;font-size:.85rem;color:#555}
+    .input-row{display:grid;grid-template-columns:120px 1fr;align-items:center;padding:12px 24px;border-top:1.5px solid #eef2f8}
+    .input-row label{color:#222;font-weight:700;font-size:.92rem}
+    .input-field{background:#dce9f7;padding:8px 14px;border-radius:7px;display:flex;justify-content:space-between;align-items:center;color:#333;font-size:.88rem;border:1px solid #c0d8ee;max-width:700px;margin-left:30px}
+    .edit-link{background:none;border:none;color:#2B59FF;font-weight:700;cursor:pointer;font-size:.84rem;flex-shrink:0;margin-left:10px;transition:opacity .15s}
+    .edit-link:hover{opacity:.75;text-decoration:underline}
+    .edit-input{border:none;background:transparent;font-size:.88rem;font-family:'DM Sans',sans-serif;outline:none;width:100%;color:#1a1a1a}
+    .acc-actions{padding:16px 24px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;border-top:1.5px solid #eef2f8}
+    .btn-reset{width:50%;max-width:450px;background:#2B59FF;color:#fff;border:none;padding:11px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;transition:background .18s,transform .1s;font-family:'DM Sans',sans-serif}
+    .btn-reset:hover{background:#1a4fa8}
+    .btn-reset:active{transform:scale(.98)}
+    .btn-logout-bottom{background:#f0f4fa;color:#2B59FF;border:1.5px solid #629ace;padding:7px 32px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.88rem;font-family:'DM Sans',sans-serif;transition:background .15s}
+    .btn-logout-bottom:hover{background:#dde8f8}
+    body.dark-mode .admin-name{color:#e5e7eb}
+    body.dark-mode .admin-role{color:#a0aec0}
+    body.dark-mode .input-row{border-top-color:#3f414a}
+    body.dark-mode .input-row label{color:#c5d5f0}
+    body.dark-mode .input-field{background:#2e3240;border-color:#4a5568;color:#e5e7eb}
+    body.dark-mode .edit-input{color:#e5e7eb}
+    body.dark-mode .acc-actions{border-top-color:#3f414a}
+    body.dark-mode .btn-logout-bottom{background:#2e3240;color:#6b9fff;border-color:#4a5568}
+    [dir="rtl"] .input-field{margin-left:0;margin-right:30px}
+    [dir="rtl"] .edit-link{margin-left:0;margin-right:10px}
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="top-header">
+  <div class="header-brand">
+    <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="brand-wrap">
+      <img src="../images/f2 - Copy.jpeg" alt="Care Mate" class="brand-logo" onerror="this.style.display='none'"/>
+      <div class="brand">Care Mate</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="welcome-text"><span data-i18n="welcome">Welcome,</span> <strong>Admin</strong></span>
+    <div class="hdr-avatar">
+      <img src="../../imges/user.jpg" alt="Admin" onerror="this.style.display='none';this.parentElement.innerHTML='A'"/>
+    </div>
+    <div class="header-controls">
+      <button class="bell-btn" title="Notifications">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#1a3a6b">
+          <path d="M12 2a7 7 0 0 0-7 7v3.17L3.41 13.7A1 1 0 0 0 4 15.5h16a1 1 0 0 0 .59-1.8L19 12.17V9a7 7 0 0 0-7-7zm0 20a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2z"/>
+        </svg>
+        <span class="dot"></span>
+      </button>
+      <button class="logout-btn" onclick="openSModal('logoutModal')" data-i18n="logout">Log out</button>
+    </div>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ══ LAYOUT ══ -->
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <a onclick="navigate('home');setActive(this)"><i class="fas fa-home"></i> <span data-i18n="nav_home">Home Page</span></a>
+    <a onclick="navigate('hospital');setActive(this)"><i class="fas fa-hospital"></i> <span data-i18n="nav_hosp">Hospital Info</span></a>
+    <a onclick="navigate('patient');setActive(this)"><i class="fas fa-user-injured"></i> <span data-i18n="nav_patient">Patient</span></a>
+    <a onclick="navigate('general');setActive(this)" class="active"><i class="fas fa-cog"></i> <span data-i18n="setting">Setting</span></a>
+  </nav>
+
+  <div class="main">
+
+    <!-- ══ HOME PAGE ══ -->
+    <div class="page" id="page-home">
+      <div class="page-title"><i class="fas fa-home"></i> <span data-i18n="nav_home">Home Page</span></div>
+      <div class="hero">
+        <div class="hero-text">
+          <h1 class="hero-title"><span class="wave">👋</span> <span class="highlight">Welcome Back</span>, Admin</h1>
+          <p class="hero-sub">Manage your hospital system efficiently from here</p>
+        </div>
+        <img src="WhatsApp Image 2026-04-04 at 7.12.42 PM.jpeg" class="hero-img" alt="" onerror="this.style.display='none'"/>
+      </div>
+      <div class="cards-grid">
+        <div class="home-card" onclick="navigate('hospital');setActiveByPage('hospital')">
+          <div class="home-card-row">
+            <div class="home-card-icon"><i class="fas fa-hospital"></i></div>
+            <span class="home-card-title">Hospital Info</span>
+          </div>
+          <p class="home-card-desc">Edit hospital details, services, and departments</p>
+        </div>
+        <div class="home-card" onclick="navigate('patient');setActiveByPage('patient')">
+          <div class="home-card-row">
+            <div class="home-card-icon"><i class="fas fa-user-injured"></i></div>
+            <span class="home-card-title">Patient</span>
+          </div>
+          <p class="home-card-desc">View and manage patient records</p>
+        </div>
+        <div class="home-card" onclick="navigate('general');setActiveByPage('general')">
+          <div class="home-card-row">
+            <div class="home-card-icon"><i class="fas fa-cog"></i></div>
+            <span class="home-card-title">Setting</span>
+          </div>
+          <p class="home-card-desc">Configure system settings, language, and theme</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ HOSPITAL INFO PAGE ══ -->
+    <div class="page" id="page-hospital">
+      <div class="page-title"><i class="fas fa-hospital"></i> <span data-i18n="nav_hosp">Hospital Information</span></div>
+      <div class="info-card">
+        <div class="info-card-header">Hospital Information</div>
+        <div class="form-row">
+          <label for="hospName">Hospital Name:</label>
+          <input id="hospName" type="text" value="Mansoura University Hospital" disabled/>
+        </div>
+        <div class="form-row">
+          <label for="hospLocation">Location:</label>
+          <input id="hospLocation" type="text" value="El-Gomhouria Street, Mansoura" disabled/>
+        </div>
+        <div class="form-row">
+          <label for="hospPhone">Phone Number:</label>
+          <input id="hospPhone" type="text" value="0502255225" disabled/>
+        </div>
+        <div class="form-row">
+          <label for="hospDesc">Description:</label>
+          <textarea id="hospDesc" rows="3" disabled>A leading medical and educational institution in Egypt, providing advanced healthcare services, specialized treatments, and medical training for future healthcare professionals.</textarea>
+        </div>
+        <div class="form-row">
+          <label>Hospital Services:</label>
+          <div class="checks-grid">
+            <label class="check-item"><input type="checkbox" id="svc-radio" checked disabled/> Radiology</label>
+            <label class="check-item"><input type="checkbox" id="svc-clinic" checked disabled/> Clinics</label>
+            <label class="check-item"><input type="checkbox" id="svc-icu" disabled/> Intensive Care Unit</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Hospital Departments:</label>
+          <div class="checks-grid">
+            <label class="check-item"><input type="checkbox" id="dep-surgery" checked disabled/> General Surgery</label>
+            <label class="check-item"><input type="checkbox" id="dep-cardio" disabled/> Cardiology</label>
+            <label class="check-item"><input type="checkbox" id="dep-onco" checked disabled/> Oncology</label>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="ibtn ibtn-primary" id="hospEditBtn" onclick="hospEdit()">Edit</button>
+          <button class="ibtn ibtn-success" id="hospSaveBtn" disabled onclick="hospSave()">Save Changes</button>
+          <button class="ibtn ibtn-outline" id="hospCancelBtn" disabled onclick="hospCancel()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PATIENT PAGE ══ -->
+    <div class="page" id="page-patient">
+      <div class="page-title"><i class="fas fa-user-injured"></i> <span data-i18n="nav_patient">Patient Information</span></div>
+      <div class="pt-card">
+        <div class="toolbar">
+          <button class="btn-add" onclick="openAddPatient()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Patient
+          </button>
+          <div class="search-wrap">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="ptSearch" placeholder="Search..." oninput="applyFilters()"/>
+          </div>
+          <div class="pt-filters">
+            <select class="pt-select" id="filterGender" onchange="applyFilters()">
+              <option value="">Gender: All</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <select class="pt-select" id="filterAge" onchange="applyFilters()">
+              <option value="">Age: All</option>
+              <option value="0-20">0–20</option>
+              <option value="21-40">21–40</option>
+              <option value="41-60">41–60</option>
+              <option value="61+">61+</option>
+            </select>
+            <select class="pt-select" id="filterStatus" onchange="applyFilters()">
+              <option value="">Status: All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="pt-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th class="sortable" onclick="sortBy('name')">Name <span class="sort-icon" id="sort-name">⇅</span></th>
+                <th class="sortable" onclick="sortBy('age')">Age <span class="sort-icon" id="sort-age">⇅</span></th>
+                <th class="sortable" onclick="sortBy('gender')">Gender <span class="sort-icon" id="sort-gender">⇅</span></th>
+                <th>Phone</th>
+                <th>Disease</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ptTableBody"></tbody>
+          </table>
+          <div id="noResults" class="no-results" style="display:none">😔 No patients found.</div>
+        </div>
+        <div class="table-footer">
+          <span class="entries-info" id="entriesInfo">Showing 0 to 0 of 0 entries</span>
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ GENERAL (SETTINGS) PAGE ══ -->
+    <div class="page active" id="page-general">
+      <div class="page-title"><i class="fas fa-cog"></i> <span data-i18n="setting">Setting</span></div>
+      <div class="settings-card">
+        <div class="tabs">
+          <div class="tab active" data-i18n="general">General</div>
+          <div class="tab" data-i18n="account" onclick="navigate('account');setActiveByPage('general')">Account</div>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-globe"></i> <span data-i18n="language_label">Language:</span></label>
+          <select onchange="changeLanguage(this.value)" id="langSelect">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-moon"></i> <span data-i18n="themes">Themes:</span></label>
+          <div class="themes-container">
+            <label class="theme-option active" onclick="setTheme('light')">
+              <input type="radio" name="theme" checked/>
+              <i class="fas fa-check-circle"></i> <span data-i18n="light">Light</span>
+            </label>
+            <label class="theme-option" onclick="setTheme('dark')">
+              <input type="radio" name="theme"/>
+              <i class="fas fa-check-circle"></i> <span data-i18n="dark">Dark</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-hospital-alt"></i> <span data-i18n="visibility">Visibility:</span></label>
+          <div class="toggle-switch-container">
+            <label class="switch"><input type="checkbox" id="publicSwitch" checked onchange="updateVisibility()"/><span class="slider round"></span></label>
+            <span class="label-text" data-i18n="public">Public</span>
+            <label class="switch"><input type="checkbox" id="privateSwitch" onchange="updateVisibilityPrivate()"/><span class="slider round"></span></label>
+            <span class="label-text" data-i18n="private">Private</span>
+          </div>
+        </div>
+        <div class="info-note">
+          <i class="fas fa-info-circle"></i>
+          <span data-i18n="info_note">Set to "Private" to temporarily hide your hospital from public view.</span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-clock"></i> <span data-i18n="work_time">Work Time:</span></label>
+          <div class="time-picker">
+            <span class="time-box" id="start-time">9:00 AM</span>
+            <span class="to-text" data-i18n="to_text">to</span>
+            <span class="time-box" id="end-time">5:00 PM</span>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="gbtn gbtn-edit" onclick="enableEdit()" data-i18n="edit_btn">Edit</button>
+          <button class="gbtn gbtn-save" onclick="openSModal('saveModal')" data-i18n="save_btn">Save Changes</button>
+          <button class="gbtn gbtn-cancel" onclick="cancelEdit()" data-i18n="cancel_btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ══ ACCOUNT PAGE ══ -->
+    <div class="page" id="page-account">
+      <div class="page-title"><i class="fas fa-user-circle"></i> <span data-i18n="setting">Setting</span></div>
+      <div class="settings-card">
+        <div class="tabs">
+          <div class="tab" data-i18n="general" onclick="navigate('general');setActiveByPage('general')">General</div>
+          <div class="tab active" data-i18n="account">Account</div>
+        </div>
+        <div style="padding-top:8px">
+          <div class="user-profile-info">
+            <img src="../../imges/user.jpg" class="admin-avatar" alt="Admin" onerror="this.style.visibility='hidden'"/>
+            <div>
+              <div class="admin-name" id="displayName">Hany Amir</div>
+              <div class="admin-role" data-i18n="acc_role">Admin</div>
+            </div>
+          </div>
+          <div class="input-row">
+            <label data-i18n="acc_name">Name:</label>
+            <div class="input-field">
+              <span>Hany Amir</span>
+              <button class="edit-link" onclick="toggleEdit(this)" data-i18n="edit_btn">Edit</button>
+            </div>
+          </div>
+          <div class="input-row">
+            <label data-i18n="acc_username">User Name:</label>
+            <div class="input-field">
+              <span>Hany_Admin</span>
+              <button class="edit-link" onclick="toggleEdit(this)" data-i18n="edit_btn">Edit</button>
+            </div>
+          </div>
+          <div class="input-row">
+            <label data-i18n="acc_email">Email:</label>
+            <div class="input-field">
+              <span>Admin@gmail.com</span>
+              <button class="edit-link" onclick="toggleEdit(this)" data-i18n="edit_btn">Edit</button>
+            </div>
+          </div>
+          <div class="acc-actions">
+            <button class="btn-reset" onclick="openSModal('resetModal')" data-i18n="acc_reset">Reset Password</button>
+            <button class="btn-logout-bottom" onclick="openSModal('logoutModal')" data-i18n="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end .main -->
+</div><!-- end .layout -->
+
+<!-- ══ PATIENT MODALS ══ -->
+<div class="pm-overlay" id="ptFormModal">
+  <div class="pm-modal">
+    <div class="pm-header"><span id="ptModalTitle">Add Patient</span><button class="pm-close" onclick="closePM('ptFormModal')">✕</button></div>
+    <div class="pm-body">
+      <div class="modal-grid">
+        <div class="field-group"><label>First Name *</label><input id="fName" type="text" placeholder="Ahmed"/></div>
+        <div class="field-group"><label>Last Name *</label><input id="lName" type="text" placeholder="Hassan"/></div>
+        <div class="field-group"><label>Age *</label><input id="fAge" type="number" min="1" max="120" placeholder="35"/></div>
+        <div class="field-group"><label>Gender *</label><select id="fGender"><option value="">-- Select --</option><option>Male</option><option>Female</option></select></div>
+        <div class="field-group full"><label>Phone *</label><input id="fPhone" type="tel" placeholder="+2015465255"/></div>
+        <div class="field-group full"><label>Disease / Diagnosis</label><input id="fDisease" type="text" placeholder="Hypertension"/></div>
+        <div class="field-group"><label>Status</label><select id="fStatus"><option>Active</option><option>Inactive</option></select></div>
+        <div class="field-group"><label>Notes</label><input id="fNotes" type="text" placeholder="Optional notes"/></div>
+      </div>
+    </div>
+    <div class="pm-footer">
+      <button class="btn-cancel-sm" onclick="closePM('ptFormModal')">Cancel</button>
+      <button class="btn-save-sm" onclick="savePatient()">Save Patient</button>
+    </div>
+  </div>
+</div>
+
+<div class="pm-overlay" id="ptViewModal">
+  <div class="pm-modal">
+    <div class="pm-header"><span>Patient Details</span><button class="pm-close" onclick="closePM('ptViewModal')">✕</button></div>
+    <div class="pm-body" id="ptViewBody"></div>
+    <div class="pm-footer"><button class="btn-cancel-sm" onclick="closePM('ptViewModal')">Close</button></div>
+  </div>
+</div>
+
+<div class="pm-overlay" id="ptConfirmModal">
+  <div class="pm-modal" style="max-width:380px">
+    <div class="pm-header"><span>Confirm Delete</span><button class="pm-close" onclick="closePM('ptConfirmModal')">✕</button></div>
+    <div class="confirm-body">
+      <div class="confirm-icon">🗑️</div>
+      <div class="confirm-msg">Delete Patient?</div>
+      <div class="confirm-sub" id="ptConfirmSub">This action cannot be undone.</div>
+      <div class="confirm-btns">
+        <button class="btn-cancel-sm" onclick="closePM('ptConfirmModal')">Cancel</button>
+        <button class="btn-danger-sm" onclick="confirmDeletePt()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SETTINGS MODALS ══ -->
+<div class="smodal-overlay" id="saveModal">
+  <div class="smodal">
+    <h3>Save Changes</h3>
+    <p>Are you sure you want to save these settings?</p>
+    <div class="smodal-btns">
+      <button class="smodal-cancel" onclick="closeSModal('saveModal')">Cancel</button>
+      <button class="smodal-confirm" onclick="doSave()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="smodal-overlay" id="resetModal">
+  <div class="smodal">
+    <h3>Reset Password</h3>
+    <p>Do you want to reset your password? A reset link will be sent to your email.</p>
+    <div class="smodal-btns">
+      <button class="smodal-cancel" onclick="closeSModal('resetModal')">Cancel</button>
+      <button class="smodal-confirm" onclick="doReset()">Send Link</button>
+    </div>
+  </div>
+</div>
+
+<div class="smodal-overlay" id="logoutModal">
+  <div class="smodal">
+    <h3>Log Out</h3>
+    <p>Are you sure you want to log out?</p>
+    <div class="smodal-btns">
+      <button class="smodal-cancel" onclick="closeSModal('logoutModal')">Cancel</button>
+      <button class="smodal-confirm" onclick="doLogout()">Log out</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  if (page === 'patient') { applyFilters(); }
+}
+function setActive(el) {
+  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeSidebar();
+}
+function setActiveByPage(page) {
+  const links = document.querySelectorAll('.sidebar a');
+  const map = { home:0, hospital:1, patient:2, general:3 };
+  links.forEach(a => a.classList.remove('active'));
+  if (links[map[page]]) links[map[page]].classList.add('active');
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════ */
+function toggleSidebar() {
+  ['sidebar','sidebarOverlay'].forEach(id => document.getElementById(id).classList.toggle('open'));
+  document.getElementById('hamburger').classList.toggle('open');
+}
+function closeSidebar() {
+  ['sidebar','sidebarOverlay'].forEach(id => document.getElementById(id).classList.remove('open'));
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+/* ══════════════════════════════════════
+   LANGUAGE & THEME
+══════════════════════════════════════ */
+const translations = {
+  en:{
+    setting:'Setting', general:'General', account:'Account',
+    language_label:'Language:', themes:'Themes:', dark:'Dark', light:'Light',
+    save_btn:'Save Changes', edit_btn:'Edit', cancel_btn:'Cancel',
+    work_time:'Work Time:', to_text:'to',
+    nav_home:'Home Page', nav_hosp:'Hospital Info', nav_patient:'Patient',
+    welcome:'Welcome,', logout:'Log out',
+    visibility:'Visibility:', public:'Public', private:'Private',
+    info_note:'Set to "Private" to temporarily hide your hospital from public view.',
+    acc_role:'Admin', acc_name:'Name:', acc_username:'User Name:', acc_email:'Email:', acc_reset:'Reset Password'
+  },
+  ar:{
+    setting:'الإعدادات', general:'عام', account:'الحساب',
+    language_label:'اللغة:', themes:'المظهر:', dark:'داكن', light:'فاتح',
+    save_btn:'حفظ التغييرات', edit_btn:'تعديل', cancel_btn:'إلغاء',
+    work_time:'وقت العمل:', to_text:'إلى',
+    nav_home:'الصفحة الرئيسية', nav_hosp:'بيانات المستشفى', nav_patient:'المريض',
+    welcome:'مرحباً،', logout:'تسجيل الخروج',
+    visibility:'الظهور:', public:'عام', private:'خاص',
+    info_note:'اضبط على "خاص" لإخفاء مستشفاك مؤقتاً عن العرض العام.',
+    acc_role:'مدير', acc_name:'الاسم:', acc_username:'اسم المستخدم:', acc_email:'البريد الإلكتروني:', acc_reset:'إعادة تعيين كلمة المرور'
+  }
+};
+
+function changeLanguage(lang) {
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+  });
+  document.querySelectorAll('.time-box').forEach(box => {
+    if (lang === 'ar') {
+      box.innerText = box.innerText.replace(/AM/gi,'صباحاً').replace(/PM/gi,'مساءً');
+    } else {
+      box.innerText = box.innerText.replace(/صباحاً/g,'AM').replace(/مساءً/g,'PM');
+    }
+  });
+
+  /* ══ Home Page content ══ */
+  const heroTitle = document.querySelector('.hero-title');
+  const heroSub   = document.querySelector('.hero-sub');
+  if (heroTitle) heroTitle.innerHTML = lang === 'ar'
+    ? '<span class="wave">👋</span> <span class="highlight">مرحباً بعودتك</span>، أدمن'
+    : '<span class="wave">👋</span> <span class="highlight">Welcome Back</span>, Admin';
+  if (heroSub) heroSub.textContent = lang === 'ar'
+    ? 'أدر نظام مستشفاك بكفاءة من هنا'
+    : 'Manage your hospital system efficiently from here';
+
+  const homeCards = [
+    { title: lang==='ar'?'بيانات المستشفى':'Hospital Info',  desc: lang==='ar'?'تعديل تفاصيل المستشفى والخدمات والأقسام':'Edit hospital details, services, and departments' },
+    { title: lang==='ar'?'المريض':'Patient',                  desc: lang==='ar'?'عرض وإدارة سجلات المرضى':'View and manage patient records' },
+    { title: lang==='ar'?'الإعدادات':'Setting',               desc: lang==='ar'?'ضبط إعدادات النظام واللغة والمظهر':'Configure system settings, language, and theme' }
+  ];
+  document.querySelectorAll('.home-card').forEach((card, i) => {
+    if (!homeCards[i]) return;
+    const titleEl = card.querySelector('.home-card-title');
+    const descEl  = card.querySelector('.home-card-desc');
+    if (titleEl) titleEl.textContent = homeCards[i].title;
+    if (descEl)  descEl.textContent  = homeCards[i].desc;
+  });
+
+  /* ══ Hospital Info Page content ══ */
+  const hospHeader = document.querySelector('.info-card-header');
+  if (hospHeader) hospHeader.textContent = lang === 'ar' ? 'بيانات المستشفى' : 'Hospital Information';
+
+  const hospLabels = {
+    hospName:     lang==='ar'?'اسم المستشفى:':'Hospital Name:',
+    hospLocation: lang==='ar'?'الموقع:':'Location:',
+    hospPhone:    lang==='ar'?'رقم الهاتف:':'Phone Number:',
+    hospDesc:     lang==='ar'?'الوصف:':'Description:'
+  };
+  Object.entries(hospLabels).forEach(([id, text]) => {
+    const row = document.getElementById(id);
+    if (row) {
+      const label = row.closest('.form-row')?.querySelector('label');
+      if (label) label.textContent = text;
+    }
+  });
+
+  /* Services & Departments labels */
+  const formRowLabels = document.querySelectorAll('.form-row label:not([for])');
+  if (formRowLabels[0]) formRowLabels[0].textContent = lang==='ar'?'خدمات المستشفى:':'Hospital Services:';
+  if (formRowLabels[1]) formRowLabels[1].textContent = lang==='ar'?'أقسام المستشفى:':'Hospital Departments:';
+
+  const svcMap = {
+    'svc-radio':    lang==='ar'?'الأشعة':'Radiology',
+    'svc-clinic':   lang==='ar'?'العيادات':'Clinics',
+    'svc-icu':      lang==='ar'?'العناية المركزة':'Intensive Care Unit',
+    'dep-surgery':  lang==='ar'?'الجراحة العامة':'General Surgery',
+    'dep-cardio':   lang==='ar'?'أمراض القلب':'Cardiology',
+    'dep-onco':     lang==='ar'?'علم الأورام':'Oncology'
+  };
+  Object.entries(svcMap).forEach(([id, text]) => {
+    const cb = document.getElementById(id);
+    if (cb) {
+      const lbl = cb.closest('label.check-item');
+      if (lbl) lbl.childNodes[lbl.childNodes.length-1].textContent = ' ' + text;
+    }
+  });
+
+  /* Hospital buttons */
+  const hospEditBtn   = document.getElementById('hospEditBtn');
+  const hospSaveBtn   = document.getElementById('hospSaveBtn');
+  const hospCancelBtn = document.getElementById('hospCancelBtn');
+  if (hospEditBtn)   hospEditBtn.textContent   = lang==='ar'?'تعديل':'Edit';
+  if (hospSaveBtn)   hospSaveBtn.textContent   = lang==='ar'?'حفظ التغييرات':'Save Changes';
+  if (hospCancelBtn) hospCancelBtn.textContent = lang==='ar'?'إلغاء':'Cancel';
+
+  /* ══ Patient Page content ══ */
+  const addPatientBtn = document.querySelector('.btn-add');
+  if (addPatientBtn) {
+    const svg = addPatientBtn.querySelector('svg');
+    addPatientBtn.textContent = lang==='ar'?' إضافة مريض':' Add Patient';
+    if (svg) addPatientBtn.prepend(svg);
+  }
+
+  const ptSearch = document.getElementById('ptSearch');
+  if (ptSearch) ptSearch.placeholder = lang==='ar'?'بحث...':'Search...';
+
+  /* Filter selects */
+  const filterGender = document.getElementById('filterGender');
+  if (filterGender) {
+    filterGender.options[0].text = lang==='ar'?'الجنس: الكل':'Gender: All';
+    filterGender.options[1].text = lang==='ar'?'ذكر':'Male';
+    filterGender.options[2].text = lang==='ar'?'أنثى':'Female';
+  }
+  const filterAge = document.getElementById('filterAge');
+  if (filterAge) filterAge.options[0].text = lang==='ar'?'العمر: الكل':'Age: All';
+
+  const filterStatus = document.getElementById('filterStatus');
+  if (filterStatus) {
+    filterStatus.options[0].text = lang==='ar'?'الحالة: الكل':'Status: All';
+    filterStatus.options[1].text = lang==='ar'?'نشط':'Active';
+    filterStatus.options[2].text = lang==='ar'?'غير نشط':'Inactive';
+  }
+
+  /* Table headers */
+  const thMap = ['ID','الاسم\nName','العمر\nAge','الجنس\nGender','الهاتف\nPhone','التشخيص\nDisease','الحالة\nStatus','الإجراءات\nActions'];
+  const thMapEn = ['ID','Name','Age','Gender','Phone','Disease','Status','Actions'];
+  const thMapAr = ['المعرّف','الاسم','العمر','الجنس','الهاتف','التشخيص','الحالة','الإجراءات'];
+  const ths = document.querySelectorAll('.pt-table thead th');
+  ths.forEach((th, i) => {
+    const sortIcon = th.querySelector('.sort-icon');
+    const label = lang==='ar' ? thMapAr[i] : thMapEn[i];
+    th.textContent = label ? label : th.textContent;
+    if (sortIcon) th.appendChild(sortIcon);
+  });
+
+  const noResults = document.getElementById('noResults');
+  if (noResults) noResults.textContent = lang==='ar'?'😔 لا يوجد مرضى.':'😔 No patients found.';
+
+  localStorage.setItem('lang', lang);
+}
+
+function setTheme(theme) {
+  const body = document.body;
+  if (theme === 'dark') { body.classList.add('dark-mode'); localStorage.setItem('theme','dark'); }
+  else                  { body.classList.remove('dark-mode'); localStorage.setItem('theme','light'); }
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.remove('active');
+    const radio = opt.querySelector('input[type="radio"]');
+    const isDark = opt.innerText.trim().includes('Dark') || opt.innerText.trim().includes('داكن');
+    if ((theme==='dark'&&isDark)||(theme==='light'&&!isDark)) {
+      opt.classList.add('active');
+      if (radio) radio.checked = true;
+    }
+  });
+}
+
+/* ══════════════════════════════════════
+   SETTINGS — GENERAL PAGE LOGIC
+══════════════════════════════════════ */
+function updateVisibility() {
+  const pub = document.getElementById('publicSwitch');
+  const priv = document.getElementById('privateSwitch');
+  if (pub.checked) priv.checked = false;
+}
+function updateVisibilityPrivate() {
+  const pub = document.getElementById('publicSwitch');
+  const priv = document.getElementById('privateSwitch');
+  if (priv.checked) pub.checked = false;
+}
+
+let originalTimes = [];
+const timeBoxes = () => document.querySelectorAll('.time-box');
+
+function enableEdit() {
+  timeBoxes().forEach((box,i) => { originalTimes[i] = box.innerText; box.contentEditable='true'; });
+  showToast('You can now edit the work time directly.');
+}
+function doSave() {
+  closeSModal('saveModal');
+  timeBoxes().forEach(box => { box.contentEditable='false'; });
+  localStorage.setItem('workStart', document.getElementById('start-time').innerText);
+  localStorage.setItem('workEnd', document.getElementById('end-time').innerText);
+  showToast('✓ Changes saved successfully!');
+}
+function cancelEdit() {
+  timeBoxes().forEach((box,i) => { if(originalTimes[i]) box.innerText=originalTimes[i]; box.contentEditable='false'; });
+  showToast('Edit cancelled.');
+}
+
+/* Settings Modals */
+function openSModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeSModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.smodal-overlay').forEach(o => {
+  o.addEventListener('click', function(e){ if(e.target===this) closeSModal(this.id); });
+});
+
+
+/* ══════════════════════════════════════
+   ACCOUNT PAGE LOGIC
+══════════════════════════════════════ */
+function toggleEdit(btn) {
+  const c = btn.parentElement;
+  const span = c.querySelector('span');
+  const isEditMode = btn.dataset.mode !== 'editing';
+  if (isEditMode) {
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.value = span ? span.innerText : '';
+    inp.className = 'edit-input';
+    if (span) c.replaceChild(inp, span);
+    inp.focus(); inp.select();
+    btn.dataset.mode = 'editing';
+    btn.innerText = localStorage.getItem('lang') === 'ar' ? 'حفظ' : 'Save';
+    btn.style.color = '#16a34a';
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') btn.click();
+      if (e.key === 'Escape') {
+        const s = document.createElement('span');
+        s.innerText = inp.value;
+        c.replaceChild(s, inp);
+        btn.dataset.mode = '';
+        btn.innerText = localStorage.getItem('lang') === 'ar' ? 'تعديل' : 'Edit';
+        btn.style.color = '#2B59FF';
+      }
+    });
+  } else {
+    const inp = c.querySelector('input');
+    if (!inp) return;
+    const newVal = inp.value.trim();
+    if (!newVal) { showToast(localStorage.getItem('lang')==='ar'?'الحقل لا يمكن أن يكون فارغاً':'Field cannot be empty.', 'error'); inp.focus(); return; }
+    const ns = document.createElement('span');
+    ns.innerText = newVal;
+    c.replaceChild(ns, inp);
+    btn.dataset.mode = '';
+    btn.innerText = localStorage.getItem('lang') === 'ar' ? 'تعديل' : 'Edit';
+    btn.style.color = '#2B59FF';
+    const rows = document.querySelectorAll('#page-account .input-row');
+    if (c.closest('.input-row') === rows[0]) {
+      document.getElementById('displayName').innerText = newVal;
+    }
+    showToast(localStorage.getItem('lang')==='ar'?'✓ تم الحفظ بنجاح!':'✓ Changes saved successfully!', 'success');
+  }
+}
+
+function doReset() {
+  closeSModal('resetModal');
+  showToast('✓ Reset link sent to your email!', 'success');
+}
+
+function doLogout() {
+  closeSModal('logoutModal');
+  showToast('Logging out...');
+  setTimeout(() => { localStorage.clear(); sessionStorage.clear(); window.location.href = 'home.html'; }, 800);
+}
+
+/* ══════════════════════════════════════
+   HOSPITAL INFO LOGIC
+══════════════════════════════════════ */
+let hospEditing = false, hospSaved = {};
+const hospFields = ['hospName','hospLocation','hospPhone','hospDesc'];
+const hospChecks = ['svc-radio','svc-clinic','svc-icu','dep-surgery','dep-cardio','dep-onco'];
+
+function hospEdit() {
+  if (hospEditing) return;
+  hospEditing = true;
+  hospFields.forEach(id => { hospSaved[id] = document.getElementById(id).value; document.getElementById(id).disabled = false; });
+  hospChecks.forEach(id => { hospSaved[id] = document.getElementById(id).checked; document.getElementById(id).disabled = false; });
+  document.getElementById('hospEditBtn').disabled = true;
+  document.getElementById('hospSaveBtn').disabled = false;
+  document.getElementById('hospCancelBtn').disabled = false;
+  showToast('✏️ Edit mode activated');
+}
+function hospSave() {
+  const name = document.getElementById('hospName').value.trim();
+  const phone = document.getElementById('hospPhone').value.trim();
+  if (!name) { showToast('❌ Hospital name is required', 'error'); return; }
+  if (!/^\d{7,15}$/.test(phone)) { showToast('❌ Invalid phone number', 'error'); return; }
+  hospLock();
+  showToast('✅ Changes saved successfully', 'success');
+}
+function hospCancel() {
+  hospFields.forEach(id => { document.getElementById(id).value = hospSaved[id]; });
+  hospChecks.forEach(id => { document.getElementById(id).checked = hospSaved[id]; });
+  hospLock();
+  showToast('↩️ Changes cancelled');
+}
+function hospLock() {
+  hospEditing = false;
+  hospFields.forEach(id => { document.getElementById(id).disabled = true; });
+  hospChecks.forEach(id => { document.getElementById(id).disabled = true; });
+  document.getElementById('hospEditBtn').disabled = false;
+  document.getElementById('hospSaveBtn').disabled = true;
+  document.getElementById('hospCancelBtn').disabled = true;
+}
+
+/* ══════════════════════════════════════
+   PATIENT DATA & LOGIC
+══════════════════════════════════════ */
+let patients = [
+  {id:'PT001',name:'Ahmed Hassan',  nameAr:'أحمد حسن',    age:35,gender:'Male',  phone:'+2015465255',disease:'Hypertension',status:'Active',  notes:''},
+  {id:'PT002',name:'Mona Ibrahim',  nameAr:'منى إبراهيم', age:28,gender:'Female',phone:'+2011234567',disease:'Diabetes',    status:'Inactive',notes:''},
+  {id:'PT003',name:'Youssef Ali',   nameAr:'يوسف علي',    age:52,gender:'Male',  phone:'+2019876543',disease:'Hypertension',status:'Active',  notes:''},
+  {id:'PT004',name:'Sara Khaled',   nameAr:'سارة خالد',   age:41,gender:'Female',phone:'+2015554433',disease:'Asthma',      status:'Inactive',notes:''},
+  {id:'PT005',name:'Omar Mostafa',  nameAr:'عمر مصطفى',   age:63,gender:'Male',  phone:'+2012223344',disease:'Hypertension',status:'Active',  notes:''},
+  {id:'PT006',name:'Nadia Farouk',  nameAr:'نادية فاروق', age:37,gender:'Female',phone:'+2018887766',disease:'Migraine',    status:'Active',  notes:''},
+  {id:'PT007',name:'Hassan Sayed',  nameAr:'حسن سيد',     age:19,gender:'Male',  phone:'+2016665544',disease:'Fracture',    status:'Inactive',notes:''},
+];
+let ptFiltered = [...patients];
+let ptPage = 1, ptPerPage = 5;
+let ptEditId = null, ptDeleteId = null;
+let ptSortCol = null, ptSortDir = 1;
+let ptNextNum = patients.length + 1;
+
+function applyFilters() {
+  const q  = document.getElementById('ptSearch').value.toLowerCase();
+  const gn = document.getElementById('filterGender').value;
+  const ag = document.getElementById('filterAge').value;
+  const st = document.getElementById('filterStatus').value;
+  ptFiltered = patients.filter(p => {
+    if (q && !p.name.toLowerCase().includes(q) && !p.id.toLowerCase().includes(q) && !p.disease.toLowerCase().includes(q)) return false;
+    if (gn && p.gender !== gn) return false;
+    if (st && p.status !== st) return false;
+    if (ag) {
+      const ranges = {'0-20':[0,20],'21-40':[21,40],'41-60':[41,60],'61+':[61,999]};
+      const [mn,mx] = ranges[ag];
+      if (p.age < mn || p.age > mx) return false;
+    }
+    return true;
+  });
+  if (ptSortCol) {
+    ptFiltered.sort((a,b) => {
+      let av=a[ptSortCol], bv=b[ptSortCol];
+      if (typeof av==='string') { av=av.toLowerCase(); bv=bv.toLowerCase(); }
+      return av<bv ? -ptSortDir : av>bv ? ptSortDir : 0;
+    });
+  }
+  ptPage = 1;
+  renderPtTable();
+  renderPtPagination();
+}
+
+function renderPtTable() {
+  const tbody = document.getElementById('ptTableBody');
+  const start = (ptPage-1)*ptPerPage;
+  const end   = start+ptPerPage;
+  const page  = ptFiltered.slice(start, end);
+  document.getElementById('noResults').style.display = page.length ? 'none' : 'block';
+  const total = ptFiltered.length;
+  const s = total===0 ? 0 : start+1;
+  const e = Math.min(end, total);
+  document.getElementById('entriesInfo').textContent = `Showing ${s} to ${e} of ${total} entries`;
+  const isAr = document.documentElement.lang === 'ar';
+  tbody.innerHTML = page.map(p => {
+    const displayName = isAr && p.nameAr ? p.nameAr : p.name;
+    const init = p.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const genderLabel = isAr ? (p.gender==='Male'?'ذكر':'أنثى') : p.gender;
+    const badge = p.status==='Active'
+      ? `<span class="pt-badge pt-badge-active">${isAr?'نشط':'Active'}</span>`
+      : `<span class="pt-badge pt-badge-inactive">${isAr?'غير نشط':'Inactive'}</span>`;
+    return `<tr>
+      <td>${p.id}</td>
+      <td><div class="patient-cell"><div class="avatar-sm">${init}</div>${displayName}</div></td>
+      <td>${p.age}</td><td>${genderLabel}</td><td>${p.phone}</td><td>${p.disease}</td>
+      <td>${badge}</td>
+      <td><div class="pt-actions">
+        <button class="act-btn edit" title="Edit" onclick="openEditPatient('${p.id}')">
+          <svg width="15" height="15" fill="none" stroke="#2563c0" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <span class="act-sep">|</span>
+        <button class="act-btn view" title="View" onclick="openViewPatient('${p.id}')">
+          <svg width="15" height="15" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <span class="act-sep">|</span>
+        <button class="act-btn del" title="Delete" onclick="openDeletePatient('${p.id}')">
+          <svg width="15" height="15" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+        </button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPtPagination() {
+  const total = ptFiltered.length;
+  const pages = Math.ceil(total/ptPerPage) || 1;
+  let html = `<button class="pg-btn" onclick="goPtPage(${ptPage-1})" ${ptPage===1?'disabled':''}>Previous</button>`;
+  for (let i=1; i<=pages; i++) {
+    html += `<button class="pg-btn ${i===ptPage?'active':''}" onclick="goPtPage(${i})">${i}</button>`;
+  }
+  html += `<button class="pg-btn" onclick="goPtPage(${ptPage+1})" ${ptPage===pages?'disabled':''}>Next</button>`;
+  document.getElementById('pagination').innerHTML = html;
+}
+
+function goPtPage(p) {
+  const pages = Math.ceil(ptFiltered.length/ptPerPage) || 1;
+  if (p<1||p>pages) return;
+  ptPage = p;
+  renderPtTable();
+  renderPtPagination();
+}
+
+function sortBy(col) {
+  if (ptSortCol===col) ptSortDir*=-1; else { ptSortCol=col; ptSortDir=1; }
+  document.querySelectorAll('.sort-icon').forEach(el => el.textContent='⇅');
+  document.getElementById('sort-'+col).textContent = ptSortDir===1 ? '↑' : '↓';
+  applyFilters();
+}
+
+function openAddPatient() {
+  ptEditId = null;
+  document.getElementById('ptModalTitle').textContent = 'Add Patient';
+  ['fName','lName','fAge','fPhone','fDisease','fNotes'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('fGender').value = '';
+  document.getElementById('fStatus').value = 'Active';
+  openPM('ptFormModal');
+}
+function openEditPatient(id) {
+  const p = patients.find(x=>x.id===id); if(!p) return;
+  ptEditId = id;
+  document.getElementById('ptModalTitle').textContent = 'Edit Patient';
+  const parts = p.name.split(' ');
+  document.getElementById('fName').value    = parts[0]||'';
+  document.getElementById('lName').value    = parts.slice(1).join(' ')||'';
+  document.getElementById('fAge').value     = p.age;
+  document.getElementById('fGender').value  = p.gender;
+  document.getElementById('fPhone').value   = p.phone;
+  document.getElementById('fDisease').value = p.disease;
+  document.getElementById('fStatus').value  = p.status;
+  document.getElementById('fNotes').value   = p.notes||'';
+  openPM('ptFormModal');
+}
+function savePatient() {
+  const fn = document.getElementById('fName').value.trim();
+  const ln = document.getElementById('lName').value.trim();
+  const ag = parseInt(document.getElementById('fAge').value);
+  const gn = document.getElementById('fGender').value;
+  const ph = document.getElementById('fPhone').value.trim();
+  if (!fn||!ln)              { showToast('❌ First & Last name are required','error'); return; }
+  if (!ag||ag<1||ag>120)     { showToast('❌ Enter a valid age (1–120)','error'); return; }
+  if (!gn)                   { showToast('❌ Please select a gender','error'); return; }
+  if (!ph)                   { showToast('❌ Phone number is required','error'); return; }
+  const data = {
+    name: fn+' '+ln, age:ag, gender:gn, phone:ph,
+    disease: document.getElementById('fDisease').value.trim()||'—',
+    status:  document.getElementById('fStatus').value,
+    notes:   document.getElementById('fNotes').value.trim()
+  };
+  if (ptEditId) {
+    const idx = patients.findIndex(x=>x.id===ptEditId);
+    patients[idx] = {...patients[idx],...data};
+    showToast('✅ Patient updated successfully','success');
+  } else {
+    const newId = 'PT'+String(ptNextNum++).padStart(3,'0');
+    patients.push({id:newId,...data});
+    showToast('✅ Patient added successfully','success');
+  }
+  closePM('ptFormModal');
+  applyFilters();
+}
+function openViewPatient(id) {
+  const p = patients.find(x=>x.id===id); if(!p) return;
+  const badge = p.status==='Active'
+    ? `<span class="pt-badge pt-badge-active">Active</span>`
+    : `<span class="pt-badge pt-badge-inactive">Inactive</span>`;
+  document.getElementById('ptViewBody').innerHTML = `
+    <div class="view-row"><span class="view-label">Patient ID</span><span class="view-val">${p.id}</span></div>
+    <div class="view-row"><span class="view-label">Full Name</span><span class="view-val">${p.name}</span></div>
+    <div class="view-row"><span class="view-label">Age</span><span class="view-val">${p.age} years</span></div>
+    <div class="view-row"><span class="view-label">Gender</span><span class="view-val">${p.gender}</span></div>
+    <div class="view-row"><span class="view-label">Phone</span><span class="view-val">${p.phone}</span></div>
+    <div class="view-row"><span class="view-label">Disease</span><span class="view-val">${p.disease}</span></div>
+    <div class="view-row"><span class="view-label">Status</span><span class="view-val">${badge}</span></div>
+    ${p.notes?`<div class="view-row"><span class="view-label">Notes</span><span class="view-val">${p.notes}</span></div>`:''}
+  `;
+  openPM('ptViewModal');
+}
+function openDeletePatient(id) {
+  const p = patients.find(x=>x.id===id); if(!p) return;
+  ptDeleteId = id;
+  document.getElementById('ptConfirmSub').textContent = `Are you sure you want to delete "${p.name}"? This cannot be undone.`;
+  openPM('ptConfirmModal');
+}
+function confirmDeletePt() {
+  patients = patients.filter(x=>x.id!==ptDeleteId);
+  ptFiltered = ptFiltered.filter(x=>x.id!==ptDeleteId);
+  closePM('ptConfirmModal');
+  applyFilters();
+  showToast('🗑️ Patient deleted','success');
+}
+
+function openPM(id)  { document.getElementById(id).classList.add('open'); }
+function closePM(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.pm-overlay').forEach(el => {
+  el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); });
+});
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+let tt;
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type?' '+type:'');
+  clearTimeout(tt);
+  tt = setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  setTheme(savedTheme);
+  const savedLang = localStorage.getItem('lang') || 'en';
+  if (savedLang !== 'en') {
+    document.getElementById('langSelect').value = savedLang;
+    changeLanguage(savedLang);
+  }
+  applyFilters();
+
+  /* Navigate to correct page if coming from account.html via hash */
+  const hash = window.location.hash.replace('#','');
+  const validPages = ['home','hospital','patient','general'];
+  if (hash && validPages.includes(hash)) {
+    navigate(hash);
+    setActiveByPage(hash);
+  }
+});
+</script>
+</body>
+</html>
